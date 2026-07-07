@@ -157,6 +157,8 @@
   .field select{appearance:none;}
   .form-status{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--blue);display:none;}
 
+  .signup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+
   .info-card{
     background:linear-gradient(135deg,var(--navy),var(--navy-2));border:1px solid var(--line);border-radius:20px;padding:32px;margin-bottom:24px;
     box-shadow:0 20px 50px rgba(0,0,0,.25);
@@ -216,7 +218,7 @@
   @media (max-width:900px){
     .nav-links,.nav-actions .btn-ghost{display:none;}
     .hamburger{display:flex;}
-    .hero h1{font-size:2rem;}
+    .signup-grid{grid-template-columns:1fr;}
     .contact-grid{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr;}
   }
@@ -235,7 +237,7 @@
       <a href="contact.html" class="active">Contact</a>
     </nav>
     <div class="nav-actions">
-      <a href="mailto:PFPkickboxingacademy@gmail.com" class="btn btn-primary">Free Class</a>
+      <a href="#free-class" class="btn btn-primary">Free Class</a>
       <button class="hamburger" aria-label="Menu" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
         <span></span><span></span><span></span>
       </button>
@@ -247,7 +249,7 @@
     <a href="online-training.html">Online Training</a>
     <a href="shop.html">Shop</a>
     <a href="contact.html">Contact</a>
-    <a href="mailto:PFPkickboxingacademy@gmail.com">Free Class</a>
+    <a href="#free-class">Free Class</a>
   </div>
 </header>
 
@@ -257,6 +259,28 @@
       <span class="eyebrow">Contact Us</span>
       <h1>We'd love to hear from you.</h1>
       <p>Whether you're interested in enrolling in classes, learning more about our online training program, or have questions about apparel, we're here to help. Reach out to our team and we'll get back to you as soon as possible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="free-class" style="padding-bottom:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Get Started</span>
+      <h2>Sign up for your free class.</h2>
+      <p>Your very first class at PFP is always free. There's no online booking for it yet, so just send us your info below and we'll get you on the schedule.</p>
+    </div>
+    <div class="signup-grid">
+      <div class="info-card">
+        <h3>Free First Class</h3>
+        <p class="body-copy" style="margin-bottom:20px;">Fill out the form below (or email/call us directly) and we'll reach out to schedule your first class, on us.</p>
+        <a href="#contact-form" class="btn btn-primary">Sign Up Below</a>
+      </div>
+      <div class="info-card">
+        <h3>2-Week Trial, $100</h3>
+        <p class="body-copy" style="margin-bottom:20px;">Want more time to get a real feel for the academy? Get full access for two weeks with our discounted trial.</p>
+        <a href="https://sparkpages.io/cart/2/?i=_BbGb&amp;c=&amp;ocu=" target="_blank" rel="noopener" class="btn btn-primary">Start Your Trial</a>
+      </div>
     </div>
   </div>
 </section>
@@ -300,18 +324,6 @@
       </form>
 
       <div>
-        <div class="info-card">
-          <h3>Start Training</h3>
-          <div class="info-row">
-            <span class="label">Free First Class</span>
-            <span class="value">Email or call us and we'll get you scheduled.</span>
-          </div>
-          <div class="info-row">
-            <span class="label">2-Week Trial</span>
-            <span class="value">$100 for full access to the academy. <a href="https://sparkpages.io/cart/2/?i=_BbGb&amp;c=&amp;ocu=" target="_blank" rel="noopener" style="color:var(--blue);">Sign up here</a>.</span>
-          </div>
-        </div>
-
         <div class="info-card">
           <h3>Visit PFP Kickboxing Academy</h3>
           <p class="body-copy" style="margin-bottom:20px;">Come experience the energy of our academy and see what makes our community special. We welcome students of all ages and experience levels.</p>
