@@ -150,20 +150,24 @@
   .body-copy.center{margin-left:auto;margin-right:auto;text-align:center;}
 
   /* COLLECTIONS */
-  .collections{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .collections{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
   .product-card{
     background:linear-gradient(160deg,var(--card),rgba(255,255,255,.02));
     border:1px solid var(--line);border-radius:18px;overflow:hidden;
     display:flex;flex-direction:column;
     box-shadow:0 20px 50px rgba(0,0,0,.25);
+    transition:.22s ease;
   }
+  .product-card:hover{transform:translateY(-6px);border-color:rgba(87,169,255,.5);box-shadow:0 28px 60px rgba(0,0,0,.4);}
   .product-ph{
     aspect-ratio:1/1;background:linear-gradient(135deg,rgba(87,169,255,.18),rgba(255,22,22,.11));display:flex;align-items:center;justify-content:center;
-    text-align:center;padding:20px;border-bottom:1px solid var(--line);
+    text-align:center;padding:14px;border-bottom:1px solid var(--line);
   }
+  .product-ph img{width:100%;height:100%;object-fit:contain;background:#fff;border-radius:10px;}
   .product-ph p{font-size:0.7rem;color:var(--muted);font-style:italic;}
-  .product-body{padding:24px;display:flex;flex-direction:column;gap:12px;flex-grow:1;}
-  .product-body h3{font-size:1.5rem;}
+  .product-body{padding:20px;display:flex;flex-direction:column;gap:10px;flex-grow:1;}
+  .product-body h3{font-size:1.05rem;line-height:1.25;min-height:2.5em;}
+  .product-price{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--red);font-size:1rem;}
   .product-body p{color:var(--muted);font-size:0.9rem;flex-grow:1;}
 
   /* BENEFITS */
@@ -198,10 +202,12 @@
     .nav-links,.nav-actions .btn-ghost{display:none;}
     .hamburger{display:flex;}
     .hero .wrap{grid-template-columns:1fr;}
-    .hero h1{font-size:2.2rem;}
-    .collections{grid-template-columns:1fr;}
+    .collections{grid-template-columns:repeat(2,1fr);}
     .benefits-list{grid-template-columns:repeat(2,1fr);}
     .footer-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    .collections{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -271,41 +277,210 @@
      currently point to the live Shopify store (tysainthq.myshopify.com) as
      an interim real destination until the native Storefront API integration
      replaces it. -->
+<!-- TODO: products below are pulled from the live Shopify storefront's public
+     products.json feed (snapshot taken at build time). Since there's no
+     Storefront API token yet, cards link out to each product's real page on
+     tysainthq.myshopify.com to complete checkout there, rather than adding to
+     a cart on this site. Re-run this snapshot periodically to keep prices and
+     stock current, or wire up the Storefront API once a token is available. -->
 <section class="section" id="collections" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Featured Collections</span>
-      <h2>Shop by collection.</h2>
+      <span class="eyebrow">Shop the Collection</span>
+      <h2>Straight from the PFP store.</h2>
+      <p>Every piece is printed on demand and ships from our Shopify store. Tap any item to size up and check out.</p>
     </div>
     <div class="collections">
       <div class="product-card">
-        <div class="product-ph">
-          <p>Add photo: <strong style="color:var(--ice)">training-apparel.jpg</strong></p>
-        </div>
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/youth-staple-tee-black-back-6a2865c5a5056.jpg?v=1781032398" alt="YOUTH K-WALK ICON T-Shirt" loading="lazy"></div>
         <div class="product-body">
-          <h3>Training Apparel</h3>
-          <p>Comfortable performance wear built for movement, practice, and everyday training.</p>
-          <a href="https://tysainthq.myshopify.com" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Training Gear</a>
+          <h3>YOUTH K-WALK ICON T-Shirt</h3>
+          <span class="product-price">$60.00</span>
+          <a href="https://tysainthq.myshopify.com/products/youth-k-walk-icon-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
         </div>
       </div>
       <div class="product-card">
-        <div class="product-ph">
-          <p>Add photo: <strong style="color:var(--ice)">lifestyle-collection.jpg</strong></p>
-        </div>
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-organic-oversized-high-neck-blaster-2.0-t-shirt-black-back-6a25089445b2e.jpg?v=1780811941" alt="K-Swift ICON Unisex Oversized Tee" loading="lazy"></div>
         <div class="product-body">
-          <h3>Lifestyle Collection</h3>
-          <p>Clean, comfortable apparel for life beyond the dojo. Perfect for everyday wear while representing the martial arts community.</p>
-          <a href="https://tysainthq.myshopify.com" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Lifestyle</a>
+          <h3>K-Swift ICON Unisex Oversized Tee</h3>
+          <span class="product-price">$65.00</span>
+          <a href="https://tysainthq.myshopify.com/products/k-swift-icon-unisex-oversized-tee" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
         </div>
       </div>
       <div class="product-card">
-        <div class="product-ph">
-          <p>Add photo: <strong style="color:var(--ice)">accessories.jpg</strong></p>
-        </div>
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/all-over-print-youth-crew-neck-t-shirt-white-front-69f3f19be3c98.jpg?v=1777594792" alt="Ki'Tana Everett 'ICON' Youth Tee" loading="lazy"></div>
         <div class="product-body">
-          <h3>Accessories</h3>
-          <p>Complete your look with accessories designed for athletes, students, and supporters.</p>
-          <a href="https://tysainthq.myshopify.com" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Accessories</a>
+          <h3>Ki'Tana Everett 'ICON' Youth Tee</h3>
+          <span class="product-price">$55.00</span>
+          <a href="https://tysainthq.myshopify.com/products/ki-tana-everett-icon-youth-tee" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-cvc-t-shirt-white-back-69f244c0061e6.jpg?v=1777485003" alt="Ki'Tana Everett 'ICON' Unisex Tee" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Ki'Tana Everett 'ICON' Unisex Tee</h3>
+          <span class="product-price">$55.00</span>
+          <a href="https://tysainthq.myshopify.com/products/ki-tana-everett-icon-unisex-tee" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-organic-oversized-high-neck-blaster-2.0-t-shirt-white-back-69f243be42f7c.jpg?v=1777484759" alt="Ki'Tana Everett 'ICON' Oversized Tee" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Ki'Tana Everett 'ICON' Oversized Tee</h3>
+          <span class="product-price">$65.00</span>
+          <a href="https://tysainthq.myshopify.com/products/ki-tana-everett-icon-oversized-tee" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-organic-oversized-high-neck-blaster-2.0-t-shirt-stone-back-69e63c37467fe.jpg?v=1776696394" alt="OVERSIZED 'WMIH' Tee" loading="lazy"></div>
+        <div class="product-body">
+          <h3>OVERSIZED 'WMIH' Tee</h3>
+          <span class="product-price">$50.00</span>
+          <a href="https://tysainthq.myshopify.com/products/oversized-wmih-tee" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/youth-staple-tee-white-front-69e57beace8b3.jpg?v=1776647163" alt="'Body Punch' Youth Short Sleeve T-Shirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>'Body Punch' Youth Short Sleeve Tee</h3>
+          <span class="product-price">$35.00</span>
+          <a href="https://tysainthq.myshopify.com/products/body-punch-youth-short-sleeve-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/youth-staple-tee-heather-dust-back-69e57b380b94e.jpg?v=1776646984" alt="'WMIH' Youth Short Sleeve T-Shirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>'WMIH' Youth Short Sleeve Tee</h3>
+          <span class="product-price">$50.00</span>
+          <a href="https://tysainthq.myshopify.com/products/wmih-youth-short-sleeve-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/mens-fleece-shorts-heather-grey-front-69e55e84cd7ce.jpg?v=1776639633" alt="Men's PFP Fleece Shorts, Grey" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Men's PFP Fleece Shorts (Grey)</h3>
+          <span class="product-price">$53.95</span>
+          <a href="https://tysainthq.myshopify.com/products/mens-pfp-fleece-shorts-1" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/mens-fleece-shorts-black-front-69e55e4a236e4.jpg?v=1776639573" alt="Men's PFP Fleece Shorts, Black" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Men's PFP Fleece Shorts (Black)</h3>
+          <span class="product-price">$53.95</span>
+          <a href="https://tysainthq.myshopify.com/products/mens-pfp-fleece-shorts" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-cvc-t-shirt-sand-back-69e55bf41b2cb.jpg?v=1776638988" alt="PFP 'WMIH' Graphic Tee" loading="lazy"></div>
+        <div class="product-body">
+          <h3>PFP 'WMIH' Graphic Tee</h3>
+          <span class="product-price">$45.00</span>
+          <a href="https://tysainthq.myshopify.com/products/pfp-wmih-graphic-tee" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-cvc-t-shirt-white-front-69dd26e10f813.jpg?v=1776101116" alt="'Body Punch' Unisex Fitted T-Shirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>'Body Punch' Unisex Fitted Tee</h3>
+          <span class="product-price">$35.00</span>
+          <a href="https://tysainthq.myshopify.com/products/body-punch-unisex-fitted-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/all-over-print-youth-cotton-crew-neck-t-shirt-white-back-69de6ec84dc60.jpg?v=1776185041" alt="Limited Edition Youth Top Ten USA x PFP Vintage Team Tee" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Limited Edition Youth Top Ten x PFP Vintage Tee</h3>
+          <span class="product-price">$55.00</span>
+          <a href="https://tysainthq.myshopify.com/products/limited-edition-youth-top-ten-usa-x-pfp-vintage-team-tee" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-organic-oversized-high-neck-blaster-2.0-t-shirt-stone-back-69de6f1d1b7f6.jpg?v=1776185123" alt="Limited Edition TTUSA Vintage T-Shirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Limited Edition TTUSA Vintage Tee</h3>
+          <span class="product-price">$65.00</span>
+          <a href="https://tysainthq.myshopify.com/products/limited-edition-ttusa-vintage-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/mens-champion-t-shirt-white-front-69a9f61d4f616.jpg?v=1772746274" alt="TySaint x Men's Champion T-Shirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>TySaint x Men's Champion Tee</h3>
+          <span class="product-price">$40.00</span>
+          <a href="https://tysainthq.myshopify.com/products/tysaint-x-mens-champion-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/oversized-faded-t-shirt-faded-bone-front-69a9ed82e903a.jpg?v=1772744093" alt="Saint Oversized Faded T-Shirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Saint Oversized Faded Tee</h3>
+          <span class="product-price">$40.00</span>
+          <a href="https://tysainthq.myshopify.com/products/saint-oversized-faded-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/kiss-cut-stickers-white-4x4-default-698aaa41c654c.jpg?v=1770695244" alt="TySaint Stickers" loading="lazy"></div>
+        <div class="product-body">
+          <h3>TySaint Stickers</h3>
+          <span class="product-price">$9.00</span>
+          <a href="https://tysainthq.myshopify.com/products/tysaint-stickers" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/unisex-organic-oversized-high-neck-t-shirt-black-front-698aa7d109bed.jpg?v=1770694627" alt="Phase 2 T-Shirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>Phase 2 Tee</h3>
+          <span class="product-price">$25.00</span>
+          <a href="https://tysainthq.myshopify.com/products/phase-2-t-shirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/cotton-heritage-m2580-i-unisex-premium-pullover-hoodie-black-front-698aa5733b8df.jpg?v=1770694019" alt="PFP ALT Unisex Hoodie" loading="lazy"></div>
+        <div class="product-body">
+          <h3>PFP ALT Unisex Hoodie</h3>
+          <span class="product-price">$45.00</span>
+          <a href="https://tysainthq.myshopify.com/products/pfp-alt-unisex-hoodie" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/cotton-heritage-m2580-i-unisex-premium-pullover-hoodie-black-front-69bca9cb14562.jpg?v=1773971928" alt="PFP Unisex Hoodie" loading="lazy"></div>
+        <div class="product-body">
+          <h3>PFP Unisex Hoodie</h3>
+          <span class="product-price">$45.00</span>
+          <a href="https://tysainthq.myshopify.com/products/pfp-unisex-hoodie" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/mens-champion-sweatshirt-black-front-698aa309aaba8.jpg?v=1770693394" alt="PFP x Champion Sweatshirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>PFP x Champion Sweatshirt</h3>
+          <span class="product-price">$60.00</span>
+          <a href="https://tysainthq.myshopify.com/products/pfp-x-champion-sweatshirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/kiss-cut-stickers-white-3x3-default-698a478e9f19e.jpg?v=1770669979" alt="PFP Stickers" loading="lazy"></div>
+        <div class="product-body">
+          <h3>PFP Stickers</h3>
+          <span class="product-price">$9.00</span>
+          <a href="https://tysainthq.myshopify.com/products/pfp-stickers" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/youth-heavy-blend-hoodie-royal-back-698a41fd5de71.jpg?v=1770668561" alt="PFP Youth Heavy Blend Hoodie" loading="lazy"></div>
+        <div class="product-body">
+          <h3>PFP Youth Heavy Blend Hoodie</h3>
+          <span class="product-price">$40.00</span>
+          <a href="https://tysainthq.myshopify.com/products/pfp-youth-heavy-blend-hoodie" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-ph"><img src="https://cdn.shopify.com/s/files/1/0724/5224/3639/files/youth-crew-neck-sweatshirt-sport-grey-front-698a411263703.jpg?v=1770668318" alt="PFP Youth Crewneck Sweatshirt" loading="lazy"></div>
+        <div class="product-body">
+          <h3>PFP Youth Crewneck Sweatshirt</h3>
+          <span class="product-price">$35.50</span>
+          <a href="https://tysainthq.myshopify.com/products/pfp-youth-crewneck-sweatshirt" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Shop Now</a>
         </div>
       </div>
     </div>
@@ -353,7 +528,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="brand" style="margin-bottom:16px;"><span>PFP</span><span class="dot">•</span><span>Kickboxing Academy</span></div>
+        <div class="brand" style="margin-bottom:16px;"><img src="images/pfp-logo.png" alt="PFP Kickboxing Academy logo"><span>PFP</span><span class="dot">•</span><span>Kickboxing Academy</span></div>
         <!-- TODO: full street address pending from Tyreeke -->
         <p style="color:var(--muted);font-size:0.9rem;margin-bottom:16px;">Clifton Park Center<br>Clifton Park, NY</p>
         <a href="mailto:PFPkickboxingacademy@gmail.com">PFPkickboxingacademy@gmail.com</a>

@@ -178,6 +178,8 @@
     padding:6px 12px;border-radius:100px;width:fit-content;
   }
   .card h3{font-size:1.75rem;}
+  .program-photo{aspect-ratio:4/3;width:calc(100% + 64px);margin:-32px -32px 20px;border-radius:18px 18px 0 0;overflow:hidden;}
+  .program-photo img{width:100%;height:100%;object-fit:cover;}
   .card .subline{font-weight:700;color:var(--white);font-size:0.95rem;}
   .card p{color:var(--muted);font-size:0.95rem;flex-grow:1;}
   .card-link{font-family:'JetBrains Mono',monospace;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;color:var(--red);}
@@ -220,20 +222,24 @@
   .about-teaser{background:var(--navy);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
   .coaches{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
   .coach-card{
-    display:flex;gap:20px;align-items:flex-start;
-    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;
+    display:block;
+    background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+    transition:.22s ease;cursor:pointer;
   }
+  .coach-card:hover{transform:translateY(-6px) scale(1.02);border-color:rgba(87,169,255,.5);box-shadow:0 28px 60px rgba(0,0,0,.4);}
   .coach-photo{
-    width:110px;height:110px;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--blue));flex-shrink:0;
+    width:100%;aspect-ratio:1/1;border-radius:14px;background:linear-gradient(135deg,var(--navy),var(--blue));
     display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;
-    overflow:hidden;
+    overflow:hidden;margin-bottom:20px;
     box-shadow:0 12px 30px rgba(0,0,0,.3);
   }
-  .coach-photo img{width:100%;height:100%;object-fit:cover;border-radius:12px;}
+  .coach-photo img{width:100%;height:100%;object-fit:cover;border-radius:14px;}
   .coach-photo p{font-size:0.65rem;color:var(--muted);font-style:italic;}
   .coach-role{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:6px;display:block;}
-  .coach-card h3{font-size:1.15rem;margin-bottom:4px;text-transform:none;font-family:'Barlow',sans-serif;font-weight:700;}
-  .coach-card p.bio{color:var(--muted);font-size:0.9rem;}
+  .coach-card h3{font-size:1.4rem;margin-bottom:8px;text-transform:none;font-family:'Barlow',sans-serif;font-weight:700;}
+  .coach-card p.bio{color:var(--muted);font-size:0.95rem;}
+  .coach-card .card-link{margin-top:14px;display:inline-block;}
 
   /* BENEFITS LIST */
   .benefits-list{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0;}
@@ -259,6 +265,11 @@
   }
   .testimonial-card .label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:12px;display:block;}
   .testimonial-card .placeholder{font-size:0.85rem;color:var(--muted);font-style:italic;}
+  .testimonial-card.video-card{border-style:solid;box-shadow:0 20px 50px rgba(0,0,0,.3);}
+  .testimonial-card.video-card video{
+    width:100%;max-width:280px;aspect-ratio:9/16;object-fit:cover;
+    border-radius:14px;margin:0 auto;display:block;background:#000;
+  }
 
   /* CTA BAND */
   .cta-band{
@@ -285,12 +296,11 @@
     .nav-links,.nav-actions .btn-ghost{display:none;}
     .hamburger{display:flex;}
     .hero .wrap{grid-template-columns:1fr;}
-    .hero h1{font-size:2.2rem;}
     .badges .wrap{grid-template-columns:repeat(2,1fr);}
     .cards,.cards.cols-2{grid-template-columns:1fr;}
     .schedule-block{padding:24px;}
     .coaches{grid-template-columns:1fr;}
-    .coach-card{flex-direction:column;align-items:center;text-align:center;}
+    .coach-photo{max-width:280px;margin-left:auto;margin-right:auto;}
     .benefits-list{grid-template-columns:repeat(2,1fr);}
     .testimonial-grid{grid-template-columns:1fr;}
     .footer-grid{grid-template-columns:1fr;}
@@ -330,8 +340,8 @@
   <div class="wrap">
     <div>
       <span class="eyebrow">Clifton Park Center, NY</span>
-      <h1>Train with purpose. <span>Fight with confidence.</span></h1>
-      <p class="lede">Whether you're stepping onto the mat for the very first time or preparing for your next championship, train with Coach Tyreeke Saint through world-class instruction designed to help you reach your next level.</p>
+      <h1>Train with purpose.<br><span>Fight with confidence.</span></h1>
+      <p class="lede">Whether you're stepping onto the mat for the very first time or preparing for your next championship, train with Sensei Tyreeke Saint through world-class instruction designed to help you reach your next level.</p>
       <div class="hero-ctas">
         <a href="mailto:PFPkickboxingacademy@gmail.com" class="btn btn-primary">Start Training</a>
         <a href="#programs" class="btn btn-ghost">Explore Programs</a>
@@ -405,16 +415,19 @@
     </div>
     <div class="cards">
       <div class="card">
+        <div class="program-photo"><img src="images/karate-cubs.jpg" alt="Karate Cubs students with their instructors"></div>
         <span class="tag">Karate Cubs · Ages 5&ndash;8</span>
         <h3>Little Champs</h3>
         <p>Focus, coordination, and listening skills paired with basic karate fundamentals. Built to grow confidence from day one.</p>
       </div>
       <div class="card">
+        <div class="program-photo"><img src="images/lion-pride.jpg" alt="Lion Pride student with competition medals"></div>
         <span class="tag">Lion Pride · Ages 9&ndash;12</span>
         <h3>Youth Sport Karate</h3>
         <p>Footwork, blitzing, kicking, and defense: real discipline and safe point-fighting fundamentals for growing athletes.</p>
       </div>
       <div class="card">
+        <div class="program-photo"><img src="images/adults-kickboxing.jpg" alt="Teens and adults training together in class"></div>
         <span class="tag">Teens &amp; Cardio Kickboxing · Teens/Adult</span>
         <h3>Kickboxing</h3>
         <p>Striking skills, conditioning, and self-defense for teens and adults, with a clear path into competitive training.</p>
@@ -519,26 +532,24 @@
       <p>Every class at PFP is led by coaches who compete and win at the highest level of the sport.</p>
     </div>
     <div class="coaches">
-      <div class="coach-card">
+      <a href="about.html" class="coach-card">
         <div class="coach-photo">
-          <img src="images/tyreeke-saint.jpg" alt="Tyreeke Saint headshot">
+          <img src="images/tyreeke-saint.jpg" alt="Sensei Tyreeke Saint headshot">
         </div>
-        <div>
-          <span class="coach-role">Co-Founder / Head Coach</span>
-          <h3>Tyreeke Saint</h3>
-          <p class="bio">WAKO World Champion and 3rd degree black belt, competing for Top Ten Team USA in NASKA and WAKO point fighting. Founder of Point Fighter University.</p>
-        </div>
-      </div>
-      <div class="coach-card">
+        <span class="coach-role">Co-Founder and Head Instructor</span>
+        <h3>Sensei Tyreeke Saint</h3>
+        <p class="bio">WAKO World Champion and 3rd degree black belt, competing for Top Ten Team USA in NASKA and WAKO point fighting. Founder of Point Fighter University.</p>
+        <span class="card-link">Meet the Team &rarr;</span>
+      </a>
+      <a href="about.html" class="coach-card">
         <div class="coach-photo">
           <img src="images/el-java-abdul-qadir.jpg" alt="El-Java Abdul-Qadir headshot">
         </div>
-        <div>
-          <span class="coach-role">Instructor</span>
-          <h3>El-Java Abdul-Qadir</h3>
-          <p class="bio">7th degree black belt in Shotokan karate and multiple-time WAKO World Champion kickboxer, back-to-back gold medalist at the 2019 (Antalya) and 2021 (Jesolo Lido) WAKO World Championships.</p>
-        </div>
-      </div>
+        <span class="coach-role">Co-Founder and Instructor</span>
+        <h3>El-Java Abdul-Qadir</h3>
+        <p class="bio">7th degree black belt in Shotokan karate and multiple-time WAKO World Champion kickboxer, back-to-back gold medalist at the 2019 (Antalya) and 2021 (Jesolo Lido) WAKO World Championships.</p>
+        <span class="card-link">Meet the Team &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -565,22 +576,10 @@
   </div>
 </section>
 
-<section class="section" style="padding-top:0;">
-  <div class="wrap">
-    <div class="section-head center">
-      <span class="eyebrow">Apparel</span>
-      <h2>Wear the mindset.</h2>
-      <p>Represent the team on and off the mat. Shop official apparel designed for athletes, supporters, and anyone committed to the discipline, confidence, and work ethic that karate builds.</p>
-    </div>
-    <div style="text-align:center;">
-      <a href="shop.html" class="btn btn-primary">Shop Apparel</a>
-    </div>
-  </div>
-</section>
-
-<!-- TODO: no actual student/parent testimonial quotes provided yet. Placeholder
-     cards below flag exactly what Tyreeke needs to send before this section
-     can go live with real content. -->
+<!-- TODO: no actual parent testimonial quotes provided yet. Placeholder cards
+     below flag exactly what Tyreeke needs to send before that half of this
+     section can go live with real content. Student side now has real video
+     testimonials. -->
 <section class="section" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head">
@@ -594,13 +593,17 @@
         <h3>What Students Are Saying</h3>
       </div>
       <div class="testimonial-grid">
-        <div class="testimonial-card">
+        <div class="testimonial-card video-card">
           <span class="label">Student</span>
-          <p class="placeholder">Add student testimonial quote + name here.</p>
+          <video controls playsinline preload="metadata" poster="images/student-testimonial-1-poster.jpg">
+            <source src="videos/student-testimonial-1.mp4" type="video/mp4">
+          </video>
         </div>
-        <div class="testimonial-card">
+        <div class="testimonial-card video-card">
           <span class="label">Student</span>
-          <p class="placeholder">Add student testimonial quote + name here.</p>
+          <video controls playsinline preload="metadata" poster="images/student-testimonial-2-poster.jpg">
+            <source src="videos/student-testimonial-2.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
@@ -620,6 +623,19 @@
           <p class="placeholder">Add parent testimonial quote + name here.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head center">
+      <span class="eyebrow">Apparel</span>
+      <h2>Wear the mindset.</h2>
+      <p>Represent the team on and off the mat. Shop official apparel designed for athletes, supporters, and anyone committed to the discipline, confidence, and work ethic that karate builds.</p>
+    </div>
+    <div style="text-align:center;">
+      <a href="shop.html" class="btn btn-primary">Shop Apparel</a>
     </div>
   </div>
 </section>
