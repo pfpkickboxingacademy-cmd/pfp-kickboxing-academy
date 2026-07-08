@@ -170,6 +170,40 @@
     padding:14px 18px;color:var(--ice);font-size:0.95rem;
   }
 
+  /* SCHEDULE */
+  .schedule-block{
+    background:var(--navy);border:1px solid var(--line);border-radius:22px;
+    padding:40px;margin-bottom:40px;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+  }
+  .schedule-head{
+    margin:-40px -40px 24px;padding:24px 40px;
+    background:linear-gradient(135deg,rgba(87,169,255,.16),rgba(255,22,22,.1));
+    border-bottom:1px solid var(--line);border-radius:22px 22px 0 0;
+  }
+  .schedule-head .eyebrow{margin-bottom:10px;display:block;}
+  .schedule-head h3{font-size:clamp(1.6rem,3vw,2.375rem);margin-bottom:8px;}
+  .schedule-head p{color:var(--muted);font-size:0.95rem;}
+  .table-scroll{overflow-x:auto;border-radius:12px;border:1px solid var(--line);}
+  table{width:100%;min-width:960px;border-collapse:collapse;font-size:0.85rem;}
+  thead th{
+    font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;
+    color:var(--muted);text-align:left;padding:14px 16px;background:rgba(255,255,255,0.04);
+    border-bottom:1px solid var(--line);
+  }
+  tbody td{padding:14px 16px;border-bottom:1px solid var(--line);color:var(--ice);}
+  tbody tr:last-child td{border-bottom:none;}
+  td.time-col,th.time-col{
+    font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--white);
+    background:rgba(255,22,22,0.08);white-space:nowrap;
+  }
+  .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .pill{
+    font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;
+    color:var(--ice);background:rgba(255,255,255,0.06);border:1px solid var(--line);
+    padding:8px 14px;border-radius:100px;
+  }
+
   /* CARDS */
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .card{
@@ -234,6 +268,7 @@
     .cards{grid-template-columns:1fr;}
     .check-list{grid-template-columns:1fr;}
     .coach-split{grid-template-columns:1fr;}
+    .schedule-block{padding:24px;}
     .footer-grid{grid-template-columns:1fr;}
   }
 </style>
@@ -248,6 +283,7 @@
       <a href="/about">About</a>
       <a href="/online-training" class="active">Online Training</a>
       <a href="/shop">Shop</a>
+      <a href="/community">Community</a>
       <a href="/contact">Contact</a>
     </nav>
     <div class="nav-actions">
@@ -262,6 +298,7 @@
     <a href="/about">About</a>
     <a href="/online-training">Online Training</a>
     <a href="/shop">Shop</a>
+    <a href="/community">Community</a>
     <a href="/contact">Contact</a>
     <a href="/contact#free-class">Free Class</a>
   </div>
@@ -346,6 +383,127 @@
   </div>
 </section>
 
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Training Schedule</span>
+      <h2>Point Fighting University</h2>
+      <p>Scroll the table on mobile to see the full week.</p>
+    </div>
+
+    <div class="schedule-block">
+      <div class="schedule-head">
+        <span class="eyebrow">Weekly Schedule</span>
+        <h3>PFU Sessions</h3>
+        <p>Private slots, personal film study, open film study, and Point Fighting Competition Class throughout the week.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="time-col">Time</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+              <th>Sat</th>
+              <th>Sun</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="time-col">9:00 &ndash; 9:45 AM</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td class="time-col">10:00 &ndash; 10:45 AM</td>
+              <td>Private Slot</td>
+              <td>Personal Film Study</td>
+              <td>Private Slot</td>
+              <td>Point Fighting Competition Class</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Point Fighting Competition Class</td>
+            </tr>
+            <tr>
+              <td class="time-col">11:00 &ndash; 11:45 AM</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td class="time-col">12:00 &ndash; 12:45 PM</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td class="time-col">1:00 &ndash; 1:45 PM</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td class="time-col">2:00 &ndash; 2:45 PM</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td class="time-col">8:00 &ndash; 8:45 PM</td>
+              <td>Private Slot</td>
+              <td>Personal Film Study</td>
+              <td>Private Slot</td>
+              <td>Point Fighting Competition Class</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td class="time-col">9:00 &ndash; 10:00 PM</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>Open Film Study</td>
+              <td>&mdash;</td>
+              <td>Private Slot</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pill-row">
+        <span class="pill">Private Slot · 1-on-1 Coaching</span>
+        <span class="pill">Personal &amp; Open Film Study</span>
+        <span class="pill">Point Fighting Competition Class</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="coach-band section">
   <div class="wrap">
     <div class="coach-split">
@@ -409,14 +567,13 @@
         <a href="/about">About</a>
         <a href="/online-training">Online Training</a>
         <a href="/shop">Shop</a>
+        <a href="/community">Community</a>
         <a href="/contact">Contact</a>
       </div>
       <div>
         <h4>Follow</h4>
         <a href="https://www.instagram.com/pfpkickboxingacademy" target="_blank" rel="noopener">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">TikTok</a>
-        <a href="#">YouTube</a>
+        <a href="https://discord.gg/hs8NCYEhf" target="_blank" rel="noopener">Discord</a>
       </div>
     </div>
   </div>
