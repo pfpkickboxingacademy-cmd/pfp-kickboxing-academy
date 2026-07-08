@@ -217,6 +217,16 @@
     color:var(--ice);background:rgba(255,255,255,0.06);border:1px solid var(--line);
     padding:8px 14px;border-radius:100px;
   }
+  .skills-label{
+    font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:1px;text-transform:uppercase;
+    color:var(--muted);display:block;margin-top:4px;
+  }
+  .skills-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .pill-sm{
+    font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.5px;text-transform:uppercase;
+    color:var(--ice);background:rgba(255,255,255,0.06);border:1px solid var(--line);
+    padding:5px 10px;border-radius:100px;
+  }
 
   /* COACHES */
   .about-teaser{background:var(--navy);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -295,6 +305,7 @@
   @media (max-width:900px){
     .nav-links,.nav-actions .btn-ghost{display:none;}
     .hamburger{display:flex;}
+    .nav-actions .btn-primary{padding:9px 14px;font-size:0.65rem;letter-spacing:0.5px;}
     .hero .wrap{grid-template-columns:1fr;}
     .badges .wrap{grid-template-columns:repeat(2,1fr);}
     .cards,.cards.cols-2{grid-template-columns:1fr;}
@@ -343,7 +354,7 @@
       <h1>Train with purpose.<br><span>Fight with confidence.</span></h1>
       <p class="lede">Whether you're stepping onto the mat for the very first time or preparing for your next championship, train with Sensei Tyreeke Saint through world-class instruction designed to help you reach your next level.</p>
       <div class="hero-ctas">
-        <a href="mailto:PFPkickboxingacademy@gmail.com" class="btn btn-primary">Start Training</a>
+        <a href="contact.html#free-class" class="btn btn-primary">Start Training</a>
         <a href="#programs" class="btn btn-ghost">Explore Programs</a>
       </div>
     </div>
@@ -419,18 +430,42 @@
         <span class="tag">Karate Cubs · Ages 5&ndash;8</span>
         <h3>Little Champs</h3>
         <p>Focus, coordination, and listening skills paired with basic karate fundamentals. Built to grow confidence from day one.</p>
+        <span class="skills-label">Skills Developed</span>
+        <div class="skills-tags">
+          <span class="pill-sm">Listening Skills</span>
+          <span class="pill-sm">Following Directions</span>
+          <span class="pill-sm">Balance &amp; Coordination</span>
+          <span class="pill-sm">Sharing &amp; Teamwork</span>
+          <span class="pill-sm">Confidence</span>
+        </div>
       </div>
       <div class="card">
         <div class="program-photo"><img src="images/lion-pride.jpg" alt="Lion Pride student with competition medals"></div>
         <span class="tag">Lion Pride · Ages 9&ndash;12</span>
         <h3>Youth Sport Karate</h3>
         <p>Footwork, blitzing, kicking, and defense: real discipline and safe point-fighting fundamentals for growing athletes.</p>
+        <span class="skills-label">Skills Developed</span>
+        <div class="skills-tags">
+          <span class="pill-sm">Footwork &amp; Agility</span>
+          <span class="pill-sm">Discipline &amp; Focus</span>
+          <span class="pill-sm">Goal Setting</span>
+          <span class="pill-sm">Respect &amp; Sportsmanship</span>
+          <span class="pill-sm">Safe Sparring Basics</span>
+        </div>
       </div>
       <div class="card">
         <div class="program-photo"><img src="images/adults-kickboxing.jpg" alt="Teens and adults training together in class"></div>
         <span class="tag">Teens &amp; Cardio Kickboxing · Teens/Adult</span>
         <h3>Kickboxing</h3>
         <p>Striking skills, conditioning, and self-defense for teens and adults, with a clear path into competitive training.</p>
+        <span class="skills-label">Skills Developed</span>
+        <div class="skills-tags">
+          <span class="pill-sm">Striking Technique</span>
+          <span class="pill-sm">Conditioning &amp; Endurance</span>
+          <span class="pill-sm">Self-Defense</span>
+          <span class="pill-sm">Mental Toughness</span>
+          <span class="pill-sm">Competition Readiness</span>
+        </div>
       </div>
     </div>
   </div>
@@ -538,7 +573,7 @@
         </div>
         <span class="coach-role">Co-Founder and Head Instructor</span>
         <h3>Sensei Tyreeke Saint</h3>
-        <p class="bio">WAKO World Champion and 3rd degree black belt, competing for Top Ten Team USA in NASKA and WAKO point fighting. Founder of Point Fighter University.</p>
+        <p class="bio">WAKO World Champion and 3rd degree black belt, competing for Top Ten Team USA in NASKA and WAKO point fighting. Founder of Point Fighting University.</p>
         <span class="card-link">Meet the Team &rarr;</span>
       </a>
       <a href="about.html" class="coach-card">
@@ -645,7 +680,7 @@
     <h2>Ready to take the next step?</h2>
     <p>Come try your first class on us, or jump straight in with a discounted 2-week trial and see what PFP is all about.</p>
     <div class="hero-ctas">
-      <a href="mailto:PFPkickboxingacademy@gmail.com" class="btn btn-ghost">Book Your Free Class</a>
+      <a href="contact.html#free-class" class="btn btn-ghost">Book Your Free Class</a>
       <a href="https://sparkpages.io/cart/2/?i=_BbGb&amp;c=&amp;ocu=" target="_blank" rel="noopener" class="btn btn-ghost">Start Your $100 2-Week Trial</a>
     </div>
   </div>
