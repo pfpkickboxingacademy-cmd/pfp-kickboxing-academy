@@ -12,12 +12,12 @@
 <meta property="og:title" content="PFP Kickboxing Academy | Kids & Family Martial Arts in Clifton Park, NY">
 <meta property="og:description" content="PFP Kickboxing Academy in Clifton Park, NY: kids and family martial arts classes building character, discipline, and confidence. See programs, schedule, and coaches. First class free.">
 <meta property="og:url" content="https://pfpkickboxingacademy.com/">
-<meta property="og:image" content="https://pfpkickboxingacademy.com/images/academy-training.jpg">
-<meta property="og:image:alt" content="PFP Kickboxing Academy | Kids & Family Martial Arts in Clifton Park, NY">
+<meta property="og:image" content="https://pfpkickboxingacademy.com/images/pfp-logo.png">
+<meta property="og:image:alt" content="PFP Kickboxing Academy logo">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PFP Kickboxing Academy | Kids & Family Martial Arts in Clifton Park, NY">
 <meta name="twitter:description" content="PFP Kickboxing Academy in Clifton Park, NY: kids and family martial arts classes building character, discipline, and confidence. See programs, schedule, and coaches. First class free.">
-<meta name="twitter:image" content="https://pfpkickboxingacademy.com/images/academy-training.jpg">
+<meta name="twitter:image" content="https://pfpkickboxingacademy.com/images/pfp-logo.png">
 <link rel="icon" href="images/pfp-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -283,6 +283,7 @@
   .testimonial-block-head h3{font-size:1.4rem;text-transform:none;font-family:'Barlow',sans-serif;font-weight:800;}
   .testimonial-block-head .eyebrow{margin-bottom:0;}
   .testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .testimonial-grid.cols-3{grid-template-columns:repeat(3,1fr);}
   .testimonial-card{
     background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:32px;text-align:center;
   }
@@ -293,6 +294,9 @@
     width:100%;max-width:280px;aspect-ratio:9/16;object-fit:cover;
     border-radius:14px;margin:0 auto;display:block;background:#000;
   }
+  .testimonial-card.quote-card{border-style:solid;box-shadow:0 20px 50px rgba(0,0,0,.3);text-align:left;}
+  .testimonial-card .quote{font-size:1.02rem;color:var(--ice);font-style:italic;line-height:1.6;margin-bottom:16px;}
+  .testimonial-card .quote-author{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--white);}
 
   /* CTA BAND */
   .cta-band{
@@ -376,6 +380,7 @@
     <nav class="nav-links">
       <a href="/" class="active">Home</a>
       <a href="/about">About</a>
+      <a href="/schedule">Schedule</a>
       <a href="/online-training">Online Training</a>
       <a href="/shop">Shop</a>
       <a href="/community">Community</a>
@@ -391,6 +396,7 @@
   <div class="mobile-menu">
     <a href="/">Home</a>
     <a href="/about">About</a>
+    <a href="/schedule">Schedule</a>
     <a href="/online-training">Online Training</a>
     <a href="/shop">Shop</a>
     <a href="/community">Community</a>
@@ -523,95 +529,7 @@
   </div>
 </section>
 
-<section class="section" id="schedule" style="padding-top:0;">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Class Schedule</span>
-      <h2>PFP Kickboxing Academy: In-Person</h2>
-      <p>Clifton Park Center. Scroll the table on mobile to see the full week.</p>
-    </div>
-
-    <div class="schedule-block">
-      <div class="schedule-head">
-        <span class="eyebrow">Weekly Schedule</span>
-        <h3>Academy Classes</h3>
-        <p>Karate Cubs, Lion Pride, Teens, and Cardio Kickboxing, plus daily privates, intros, and homeschool PE.</p>
-      </div>
-      <div class="table-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th class="time-col">Time</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="time-col">10:00 AM &ndash; 3:30 PM</td>
-              <td>Privates / Intros / Homeschool PE</td>
-              <td>Privates / Intros / Homeschool PE</td>
-              <td>Privates / Intros / Homeschool PE</td>
-              <td>Privates / Intros / Homeschool PE</td>
-              <td>Privates / Intros / Homeschool PE</td>
-            </tr>
-            <tr>
-              <td class="time-col">4:00 &ndash; 4:30 PM</td>
-              <td>Karate Cubs</td>
-              <td>&mdash;</td>
-              <td>Karate Cubs</td>
-              <td>Karate Cubs</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr>
-              <td class="time-col">4:40 &ndash; 5:10 PM</td>
-              <td>Lion Pride</td>
-              <td>&mdash;</td>
-              <td>Lion Pride</td>
-              <td>Lion Pride</td>
-              <td>&mdash;</td>
-            </tr>
-            <tr>
-              <td class="time-col">5:20 &ndash; 6:05 PM</td>
-              <td>&mdash;</td>
-              <td>Teens Class</td>
-              <td>&mdash;</td>
-              <td>Teens Class</td>
-              <td>Teens Class</td>
-            </tr>
-            <tr>
-              <td class="time-col">6:15 &ndash; 7:00 PM</td>
-              <td>&mdash;</td>
-              <td>Cardio Kickboxing</td>
-              <td>&mdash;</td>
-              <td>Cardio Kickboxing</td>
-              <td>Cardio Kickboxing</td>
-            </tr>
-            <tr>
-              <td class="time-col">8:00 &ndash; 10:00 PM</td>
-              <td>Virtual Private Lesson</td>
-              <td>Virtual Private Lesson</td>
-              <td>Virtual Private Lesson</td>
-              <td>Virtual Private Lesson</td>
-              <td>Virtual Private Lesson</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="pill-row">
-        <span class="pill">Karate Cubs · Ages 5&ndash;8</span>
-        <span class="pill">Lion Pride · Ages 9&ndash;12</span>
-        <span class="pill">Teens · Ages 13+</span>
-        <span class="pill">Cardio Kickboxing · Adults</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about-teaser section">
+<section class="about-teaser section" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">About</span>
@@ -641,7 +559,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head center">
       <span class="eyebrow">Why Train Here</span>
@@ -663,9 +581,6 @@
   </div>
 </section>
 
-<!-- TODO: Parents testimonial block removed until real parent quotes are
-     provided by Tyreeke. Re-add a second .testimonial-block (Parents) here
-     once quotes come in. Students side has real video testimonials. -->
 <section class="section" style="padding-top:0;">
   <div class="wrap">
     <div class="section-head">
@@ -675,10 +590,29 @@
 
     <div class="testimonial-block">
       <div class="testimonial-block-head">
+        <span class="eyebrow">Parents</span>
+        <h3>What Parents Are Saying</h3>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card quote-card">
+          <span class="label">Parent</span>
+          <p class="quote">&ldquo;Point Fighting Professionals and Coach Ty have been a part of our journey for several years now. His dedication to the sport and to every student is something you notice right away. One of the things that sets him apart is his ability to break techniques down in a way that each individual athlete can understand and apply. Haydon has grown tremendously under Coach Ty&rsquo;s guidance, not only as a competitor but also in his confidence and understanding of point fighting. We are incredibly grateful to have him as part of Haydon&rsquo;s coaching team and highly recommend Point Fighting Professionals to any athlete looking to take their skills to the next level.&rdquo;</p>
+          <span class="quote-author">&mdash; Jordan Taylor</span>
+        </div>
+        <div class="testimonial-card quote-card">
+          <span class="label">Parent</span>
+          <p class="quote">&ldquo;Working with Sensei Tyreeke Saint is nothing short of amazing! My daughter took to his teaching style immediately and quickly began noticing the improvements in not only her skill set, but her confidence during her fights. Coach Ty&rsquo;s approach to instructing goes above and beyond kicks and punches, but also puts an intense focus on the overall mentality of your athlete and the psychology of a point fight. If you&rsquo;re looking to level up your training, join PFP Kickboxing Academy today!&rdquo;</p>
+          <span class="quote-author">&mdash; Zane Wilde</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-block">
+      <div class="testimonial-block-head">
         <span class="eyebrow">Students</span>
         <h3>What Students Are Saying</h3>
       </div>
-      <div class="testimonial-grid">
+      <div class="testimonial-grid cols-3">
         <div class="testimonial-card video-card">
           <span class="label">Student</span>
           <video controls playsinline preload="metadata" poster="images/student-testimonial-1-poster.jpg">
@@ -689,6 +623,12 @@
           <span class="label">Student</span>
           <video controls playsinline preload="metadata" poster="images/student-testimonial-2-poster.jpg">
             <source src="videos/student-testimonial-2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="testimonial-card video-card">
+          <span class="label">Student</span>
+          <video controls playsinline preload="metadata" poster="images/student-testimonial-3-poster.jpg">
+            <source src="videos/student-testimonial-3.mp4" type="video/mp4">
           </video>
         </div>
       </div>
@@ -732,6 +672,7 @@
       <div>
         <h4>Site</h4>
         <a href="/about">About</a>
+        <a href="/schedule">Schedule</a>
         <a href="/online-training">Online Training</a>
         <a href="/shop">Shop</a>
         <a href="/community">Community</a>
