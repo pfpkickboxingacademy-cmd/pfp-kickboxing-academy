@@ -283,7 +283,6 @@
   .testimonial-block-head h3{font-size:1.4rem;text-transform:none;font-family:'Barlow',sans-serif;font-weight:800;}
   .testimonial-block-head .eyebrow{margin-bottom:0;}
   .testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
-  .testimonial-grid.cols-3{grid-template-columns:repeat(3,1fr);}
   .testimonial-card{
     background:var(--card);border:1px dashed var(--line);border-radius:16px;padding:32px;text-align:center;
   }
@@ -291,9 +290,29 @@
   .testimonial-card .placeholder{font-size:0.85rem;color:var(--muted);font-style:italic;}
   .testimonial-card.video-card{border-style:solid;box-shadow:0 20px 50px rgba(0,0,0,.3);}
   .testimonial-card.video-card video{
-    width:100%;max-width:280px;aspect-ratio:9/16;object-fit:cover;
+    width:100%;height:auto;max-width:300px;aspect-ratio:9/16;object-fit:contain;
     border-radius:14px;margin:0 auto;display:block;background:#000;
   }
+
+  /* STUDENT VIDEO CAROUSEL */
+  .testimonial-carousel{display:flex;align-items:center;gap:14px;}
+  .testimonial-track{
+    display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+    padding:4px 4px 14px;-webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;scrollbar-color:var(--blue) transparent;
+  }
+  .testimonial-track::-webkit-scrollbar{height:6px;}
+  .testimonial-track::-webkit-scrollbar-track{background:transparent;}
+  .testimonial-track::-webkit-scrollbar-thumb{background:var(--blue);border-radius:100px;}
+  .testimonial-track .testimonial-card.video-card{flex:0 0 auto;scroll-snap-align:start;width:min(300px,74vw);}
+  .carousel-btn{
+    flex:0 0 auto;width:44px;height:44px;border-radius:50%;
+    background:var(--card);border:1px solid var(--line);color:var(--white);
+    font-size:1.5rem;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:.18s ease;
+  }
+  .carousel-btn:hover{background:var(--blue);border-color:var(--blue);color:var(--black);}
   .testimonial-card.quote-card{border-style:solid;box-shadow:0 20px 50px rgba(0,0,0,.3);text-align:left;}
   .testimonial-card .quote{font-size:1.02rem;color:var(--ice);font-style:italic;line-height:1.6;margin-bottom:16px;}
   .testimonial-card .quote-author{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--white);}
@@ -326,12 +345,16 @@
     .hero .wrap{grid-template-columns:1fr;gap:16px;}
     .hero-visual{order:-1;}
     .badges .wrap{grid-template-columns:repeat(2,1fr);}
+    .section{padding:52px 0;}
+    .section-head{margin-bottom:28px;}
     .cards,.cards.cols-2{grid-template-columns:1fr;}
     .schedule-block{padding:24px;}
     .coaches{grid-template-columns:1fr;}
     .coach-photo{max-width:280px;margin-left:auto;margin-right:auto;}
     .benefits-list{grid-template-columns:repeat(2,1fr);}
     .testimonial-grid{grid-template-columns:1fr;}
+    .carousel-btn{width:36px;height:36px;font-size:1.15rem;}
+    .cta-band{padding:52px 0;}
     .footer-grid{grid-template-columns:1fr;}
   }
 </style>
@@ -453,7 +476,7 @@
     <div class="cards cols-2">
       <div class="card">
         <span class="tag">In-Person</span>
-        <h3>In-Person Karate Academy</h3>
+        <h3>In-Person Martial Arts</h3>
         <p class="subline">Perfect for beginners, families, and students of all ages.</p>
         <p>Learn karate in a welcoming environment where you'll build confidence, improve fitness, develop self-defense skills, and become part of a supportive community. Whether your goal is discipline, personal growth, or simply trying something new, we'll help you every step of the way.</p>
         <a href="#programs" class="card-link">Join the Academy &rarr;</a>
@@ -612,25 +635,29 @@
         <span class="eyebrow">Students</span>
         <h3>What Students Are Saying</h3>
       </div>
-      <div class="testimonial-grid cols-3">
-        <div class="testimonial-card video-card">
-          <span class="label">Student</span>
-          <video controls playsinline preload="metadata" poster="images/student-testimonial-1-poster.jpg">
-            <source src="videos/student-testimonial-1.mp4" type="video/mp4">
-          </video>
+      <div class="testimonial-carousel">
+        <button class="carousel-btn prev" aria-label="Previous video">&#8249;</button>
+        <div class="testimonial-track">
+          <div class="testimonial-card video-card">
+            <span class="label">Student</span>
+            <video controls playsinline preload="metadata" poster="images/student-testimonial-1-poster.jpg">
+              <source src="videos/student-testimonial-1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="testimonial-card video-card">
+            <span class="label">Student</span>
+            <video controls playsinline preload="metadata" poster="images/student-testimonial-2-poster.jpg">
+              <source src="videos/student-testimonial-2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="testimonial-card video-card">
+            <span class="label">Student</span>
+            <video controls playsinline preload="metadata" poster="images/student-testimonial-3-poster.jpg">
+              <source src="videos/student-testimonial-3.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
-        <div class="testimonial-card video-card">
-          <span class="label">Student</span>
-          <video controls playsinline preload="metadata" poster="images/student-testimonial-2-poster.jpg">
-            <source src="videos/student-testimonial-2.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="testimonial-card video-card">
-          <span class="label">Student</span>
-          <video controls playsinline preload="metadata" poster="images/student-testimonial-3-poster.jpg">
-            <source src="videos/student-testimonial-3.mp4" type="video/mp4">
-          </video>
-        </div>
+        <button class="carousel-btn next" aria-label="Next video">&#8250;</button>
       </div>
     </div>
   </div>
@@ -689,6 +716,20 @@
     &copy; 2026 PFP Kickboxing Academy. All rights reserved.
   </div>
 </footer>
+
+<script>
+  document.querySelectorAll('.testimonial-carousel').forEach(function(carousel){
+    var track = carousel.querySelector('.testimonial-track');
+    var prev = carousel.querySelector('.carousel-btn.prev');
+    var next = carousel.querySelector('.carousel-btn.next');
+    function step(){
+      var card = track.querySelector('.video-card');
+      return card ? card.offsetWidth + 24 : 300;
+    }
+    if (prev) prev.addEventListener('click', function(){ track.scrollBy({left:-step(),behavior:'smooth'}); });
+    if (next) next.addEventListener('click', function(){ track.scrollBy({left:step(),behavior:'smooth'}); });
+  });
+</script>
 
 </body>
 </html>
