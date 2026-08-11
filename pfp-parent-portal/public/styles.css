@@ -1,0 +1,174 @@
+/* Same design tokens as the PFP Kickboxing Academy marketing site
+   (navy/blue/red, Anton + Barlow + JetBrains Mono) so this feels like
+   part of the same brand, not a bolted-on third-party tool. */
+:root {
+  --navy: #061e63;
+  --navy-2: #0b3a9e;
+  --blue: #57a9ff;
+  --ice: #d9eeff;
+  --red: #ff1616;
+  --white: #ffffff;
+  --black: #02040a;
+  --muted: #afc6e8;
+  --card: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.16);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin: 0 0 12px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--blue);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+a { color: var(--blue); }
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.topbar {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--black) 100%);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar .brand {
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 1.1rem;
+}
+
+.topbar nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+.topbar nav a:hover { color: var(--white); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  display: inline-block;
+  background: var(--navy-2);
+  color: var(--ice);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.pill {
+  display: inline-block;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  margin: 2px 4px 2px 0;
+}
+
+label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin: 16px 0 6px;
+}
+
+input[type=text], input[type=email], input[type=tel], input[type=date], input[type=password], select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.04);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 1rem;
+}
+
+.checkbox-row { display: flex; align-items: center; gap: 8px; margin: 12px 0; }
+.checkbox-row input { width: auto; }
+.checkbox-row label { margin: 0; text-transform: none; font-size: 0.9rem; color: var(--white); }
+
+button, .btn {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 13px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-top: 18px;
+  display: inline-block;
+  text-decoration: none;
+}
+button:hover, .btn:hover { filter: brightness(1.1); }
+.btn.secondary { background: transparent; border: 1px solid var(--line); color: var(--white); }
+
+table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
+th { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; color: var(--muted); }
+
+.flash {
+  background: rgba(87, 169, 255, 0.12);
+  border: 1px solid var(--blue);
+  color: var(--ice);
+  padding: 14px 18px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+.flash.error { background: rgba(255, 22, 22, 0.12); border-color: var(--red); }
+
+.progress-track {
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-fill { background: var(--red); height: 100%; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
