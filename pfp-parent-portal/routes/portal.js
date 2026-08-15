@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("../db");
 const { layout } = require("../views/layout");
-const { createBillingPortalSession } = require("../services/billing");
+const { createUpdateCardLink } = require("../services/billing");
 const { verifyPassword, requireParentLogin, sendPasswordResetEmail, consumeResetToken, hashPassword } = require("../services/auth");
 
 const router = express.Router();
@@ -143,15 +143,52 @@ router.get("/dashboard", requireParentLogin, (req, res) => {
   if (billing === "success") flash = { message: "Payment method saved — you're all set for automatic monthly billing." };
   if (billing === "canceled") flash = { error: true, message: "Checkout was canceled, so billing isn't set up yet. You can try again below." };
   if (billing === "portal_dry_run")
-    flash = { message: "Stripe isn't connected yet, so there's no real card on file to manage — this works automatically once real Stripe keys are added." };
+    flash = { message: "Square isn't connected yet, so there's no real card on file to manage — this works automatically once real Square keys are added." };
+  if (billing === "checked_in") flash = { message: "Attendance logged — nice work!" };
+  if (billing === "already_checked_in") flash = { message: "Already checked in for today — attendance updates once per day per student." };
 
   const students = db.prepare("SELECT * FROM students WHERE parent_id = ?").all(parent.id);
+  const todayStr = new Date().toISOString().slice(0, 10);
 
-  const studentCards = students
+  // --- Belt progress, front and center at the top of the dashboard -------
+  const progressCards = students
     .map((s) => {
       const rank = s.current_rank_id
         ? db.prepare("SELECT * FROM belt_curriculum WHERE id = ?").get(s.current_rank_id)
         : null;
+      const pct = rank ? Math.min(100, Math.round((s.classes_attended_at_rank / rank.classes_required) * 100)) : 0;
+      const checkedInToday = db
+        .prepare("SELECT 1 FROM attendance_log WHERE student_id = ? AND attended_date = ?")
+        .get(s.id, todayStr);
+
+      return `
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <div>
+              <span class="tag">${s.program}</span>
+              ${s.is_founding_member ? `<span class="tag" style="margin-left:6px;background:var(--ice);color:#061e63;">&#9733; Founding Member</span>` : ""}
+              <h3 style="font-size:1.3rem;margin:6px 0 0;">${s.name}</h3>
+            </div>
+            <form method="POST" action="/portal/students/${s.id}/check-in" style="margin:0;">
+              <button type="submit" style="margin:0;" ${checkedInToday ? "disabled" : ""}>${checkedInToday ? "Checked In Today ✓" : "Check In Today"}</button>
+            </form>
+          </div>
+          ${
+            rank
+              ? `<p style="color:var(--muted);margin:10px 0 4px;">Current rank: <strong style="color:var(--white);">${rank.rank_name}</strong></p>
+                 <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+                 <p style="color:var(--muted);font-size:0.85rem;margin-top:6px;">${s.classes_attended_at_rank} / ${rank.classes_required} classes toward next belt test</p>
+                 ${s.eligible_for_test ? `<p style="color:var(--ice);margin-top:8px;">&#9733; Eligible for belt testing!</p>` : ""}
+                 ${s.test_date ? `<p style="color:var(--muted);font-size:0.85rem;">Test scheduled: ${s.test_date}</p>` : ""}`
+              : `<p style="color:var(--muted);margin-top:10px;">No belt rank on file yet.</p>`
+          }
+        </div>
+      `;
+    })
+    .join("");
+
+  const studentCards = students
+    .map((s) => {
       const classes = db
         .prepare(
           `SELECT c.* FROM enrollments e JOIN classes c ON c.id = e.class_id WHERE e.student_id = ? ORDER BY c.day_of_week, c.start_time`
@@ -160,21 +197,10 @@ router.get("/dashboard", requireParentLogin, (req, res) => {
       const scheduleRows = classes
         .map((c) => `<tr><td>${DAY_NAMES[c.day_of_week]}</td><td>${c.name}</td><td>${c.start_time} - ${c.end_time}</td></tr>`)
         .join("");
-      const pct = rank ? Math.min(100, Math.round((s.classes_attended_at_rank / rank.classes_required) * 100)) : 0;
 
       return `
         <div class="card">
-          <span class="tag">${s.program}</span>
-          <h3 style="font-size:1.3rem;">${s.name}</h3>
-          ${
-            rank
-              ? `<p style="color:var(--muted);margin:4px 0;">Current rank: <strong style="color:var(--white);">${rank.rank_name}</strong></p>
-                 <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-                 <p style="color:var(--muted);font-size:0.8rem;margin-top:6px;">${s.classes_attended_at_rank} / ${rank.classes_required} classes toward next test</p>
-                 ${s.eligible_for_test ? `<p style="color:var(--ice);margin-top:8px;">&#9733; Eligible for belt testing!</p>` : ""}
-                 ${s.test_date ? `<p style="color:var(--muted);font-size:0.85rem;">Test scheduled: ${s.test_date}</p>` : ""}`
-              : ""
-          }
+          <h3 style="font-size:1.1rem;">${s.name}'s Classes</h3>
           <table><thead><tr><th>Day</th><th>Class</th><th>Time</th></tr></thead><tbody>${scheduleRows || `<tr><td colspan="3" style="color:var(--muted);">Not enrolled in any classes yet.</td></tr>`}</tbody></table>
         </div>
       `;
@@ -195,13 +221,15 @@ router.get("/dashboard", requireParentLogin, (req, res) => {
     <h1>${parent.name}'s Dashboard</h1>
     <p style="color:var(--muted);">Reminders go to ${parent.email_opt_in ? parent.email : "(email off)"}${parent.sms_opt_in && parent.phone ? ` and ${parent.phone}` : ""}. <a href="/portal/logout">Log out</a></p>
 
+    ${progressCards || `<p style="color:var(--muted);">No students on file yet.</p>`}
+
     <div class="card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
       <div>
         <strong>Billing: <span class="pill" style="border-color:${billingInfo.border};color:${billingInfo.color};">${billingInfo.label}</span></strong>
-        <p style="color:var(--muted);font-size:0.85rem;margin:4px 0 0;">Dues are charged automatically each month to the card on file. Update your card or view past charges anytime.</p>
+        <p style="color:var(--muted);font-size:0.85rem;margin:4px 0 0;">Dues are charged automatically each month to the card on file ($139/mo).</p>
       </div>
       <form method="GET" action="/portal/manage-billing" style="margin:0;">
-        <button type="submit" style="margin:0;">Manage Billing</button>
+        <button type="submit" style="margin:0;">Update Card on File</button>
       </form>
     </div>
 
@@ -213,7 +241,7 @@ router.get("/dashboard", requireParentLogin, (req, res) => {
       <button type="button" onclick="PFP.enablePush(this)">Enable Push Notifications</button>
     </div>
 
-    ${studentCards || `<p style="color:var(--muted);">No students on file yet.</p>`}
+    ${studentCards}
     <div class="card">
       <h3 style="font-size:1.1rem;">Upcoming Events</h3>
       <table><thead><tr><th>Date</th><th>Event</th><th>Location</th></tr></thead><tbody>${eventRows || `<tr><td colspan="3" style="color:var(--muted);">No events scheduled.</td></tr>`}</tbody></table>
@@ -222,8 +250,38 @@ router.get("/dashboard", requireParentLogin, (req, res) => {
   res.send(layout({ title: "Dashboard", active: "/portal", flash, body }));
 });
 
+// Parent self-service attendance check-in. Dedups per student per day
+// (attendance_log has a UNIQUE(student_id, attended_date) constraint), and
+// bumps classes_attended_at_rank + recomputes belt-test eligibility (9
+// classes) right away so the progress bar on the dashboard updates live.
+router.post("/students/:id/check-in", requireParentLogin, (req, res) => {
+  const student = db.prepare("SELECT * FROM students WHERE id = ? AND parent_id = ?").get(req.params.id, req.parent.id);
+  if (!student) return res.redirect("/portal/dashboard");
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+  try {
+    db.prepare("INSERT INTO attendance_log (student_id, attended_date, logged_by) VALUES (?, ?, 'parent')").run(
+      student.id,
+      todayStr
+    );
+  } catch (err) {
+    // UNIQUE constraint hit — already checked in today.
+    return res.redirect("/portal/dashboard?billing=already_checked_in");
+  }
+
+  db.prepare("UPDATE students SET classes_attended_at_rank = classes_attended_at_rank + 1 WHERE id = ?").run(student.id);
+
+  const updated = db.prepare("SELECT * FROM students WHERE id = ?").get(student.id);
+  const rank = updated.current_rank_id ? db.prepare("SELECT * FROM belt_curriculum WHERE id = ?").get(updated.current_rank_id) : null;
+  if (rank && updated.classes_attended_at_rank >= rank.classes_required && !updated.eligible_for_test) {
+    db.prepare("UPDATE students SET eligible_for_test = 1, test_eligibility_notified_at = datetime('now') WHERE id = ?").run(student.id);
+  }
+
+  res.redirect("/portal/dashboard?billing=checked_in");
+});
+
 router.get("/manage-billing", requireParentLogin, async (req, res) => {
-  const result = await createBillingPortalSession({ parent: req.parent });
+  const result = await createUpdateCardLink({ parent: req.parent });
   if (result.dryRun) {
     return res.redirect(`/portal/dashboard?billing=portal_dry_run`);
   }

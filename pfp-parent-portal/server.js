@@ -12,6 +12,7 @@ const adminRouter = require("./routes/admin");
 const trialRouter = require("./routes/trial");
 const pushRouter = require("./routes/push");
 const { layout } = require("./views/layout");
+const { ensureCatalogPlan } = require("./services/billing");
 
 const app = express();
 
@@ -20,7 +21,7 @@ const app = express();
 // session cookie secure (cookie.secure: "auto" below).
 app.set("trust proxy", 1);
 
-// Mounted BEFORE the body parsers below: Stripe webhook signature
+// Mounted BEFORE the body parsers below: Square webhook signature
 // verification needs the raw, unparsed request body.
 app.use("/webhooks", webhooksRouter);
 
@@ -68,4 +69,8 @@ app.listen(PORT, () => {
   // Start the reminder cron job in the same process. See cron.js for the
   // schedule and README.md for the Vercel-serverless alternative.
   require("./cron");
+  // If real Square credentials are set, make sure the shared $139/mo
+  // subscription plan + variation exist before the first checkout needs
+  // them. No-op in dry-run mode or once it's already been created.
+  ensureCatalogPlan().catch((err) => console.error("[SQUARE] Couldn't set up the Catalog subscription plan:", err.message));
 });

@@ -44,17 +44,17 @@ function seedBeltCurriculum() {
   const count = db.prepare("SELECT COUNT(*) AS n FROM belt_curriculum").get().n;
   if (count > 0) return console.log("Belt curriculum already seeded, skipping.");
 
-  // Placeholder rank order/classes-required — swap for PFP's real curriculum
-  // once Tyreeke confirms it (see README "Before this goes live").
+  // Every rank requires 9 classes attended before a student is eligible to
+  // test for the next belt.
   const ranks = [
-    { rank_name: "White Belt", order_index: 1, classes_required: 20 },
-    { rank_name: "Yellow Belt", order_index: 2, classes_required: 20 },
-    { rank_name: "Orange Belt", order_index: 3, classes_required: 24 },
-    { rank_name: "Green Belt", order_index: 4, classes_required: 24 },
-    { rank_name: "Blue Belt", order_index: 5, classes_required: 28 },
-    { rank_name: "Purple Belt", order_index: 6, classes_required: 28 },
-    { rank_name: "Brown Belt", order_index: 7, classes_required: 32 },
-    { rank_name: "Black Belt", order_index: 8, classes_required: 40 },
+    { rank_name: "White Belt", order_index: 1, classes_required: 9 },
+    { rank_name: "Yellow Belt", order_index: 2, classes_required: 9 },
+    { rank_name: "Orange Belt", order_index: 3, classes_required: 9 },
+    { rank_name: "Green Belt", order_index: 4, classes_required: 9 },
+    { rank_name: "Blue Belt", order_index: 5, classes_required: 9 },
+    { rank_name: "Purple Belt", order_index: 6, classes_required: 9 },
+    { rank_name: "Brown Belt", order_index: 7, classes_required: 9 },
+    { rank_name: "Black Belt", order_index: 8, classes_required: 9 },
   ];
   const insert = db.prepare(`
     INSERT INTO belt_curriculum (rank_name, order_index, classes_required)
@@ -103,21 +103,21 @@ function seedPlans() {
   const count = db.prepare("SELECT COUNT(*) AS n FROM plans").get().n;
   if (count > 0) return console.log("Plans already seeded, skipping.");
 
-  // Placeholder monthly dues — swap for PFP's real pricing, and fill in
-  // stripe_price_id (via admin > Plans) once the matching Stripe Price
-  // exists, before going live with real billing.
+  // Flat $139/mo for every program. The first 10 students to sign up get a
+  // "Founding Member" badge (see routes/signup.js) — price is the same
+  // $139/mo for everyone, founding or not.
   const rows = [
-    { program: "Karate Cubs", name: "Karate Cubs Monthly", monthly_price_cents: 12900 },
-    { program: "Lion Pride", name: "Lion Pride Monthly", monthly_price_cents: 12900 },
-    { program: "Teens", name: "Teens Monthly", monthly_price_cents: 14900 },
-    { program: "Adults", name: "Cardio Kickboxing Monthly", monthly_price_cents: 14900 },
+    { program: "Karate Cubs", name: "Karate Cubs Monthly", monthly_price_cents: 13900 },
+    { program: "Lion Pride", name: "Lion Pride Monthly", monthly_price_cents: 13900 },
+    { program: "Teens", name: "Teens Monthly", monthly_price_cents: 13900 },
+    { program: "Adults", name: "Cardio Kickboxing Monthly", monthly_price_cents: 13900 },
   ];
   const insert = db.prepare(
     `INSERT INTO plans (program, name, monthly_price_cents) VALUES (@program, @name, @monthly_price_cents)`
   );
   const insertMany = db.transaction((items) => items.forEach((r) => insert.run(r)));
   insertMany(rows);
-  console.log(`Seeded ${rows.length} billing plans (placeholder pricing — update in admin > Plans).`);
+  console.log(`Seeded ${rows.length} billing plans ($139/mo flat, all programs).`);
 }
 
 function seedDemoFamily() {
@@ -133,10 +133,10 @@ function seedDemoFamily() {
 
   const student = db
     .prepare(`
-      INSERT INTO students (parent_id, name, program, current_rank_id, classes_attended_at_rank, plan_id)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO students (parent_id, name, program, current_rank_id, classes_attended_at_rank, plan_id, is_founding_member)
+      VALUES (?, ?, ?, ?, ?, ?, 1)
     `)
-    .run(parent.lastInsertRowid, "Avery Rivera", "Lion Pride", whiteBeltId, 18, lionPridePlan ? lionPridePlan.id : null);
+    .run(parent.lastInsertRowid, "Avery Rivera", "Lion Pride", whiteBeltId, 6, lionPridePlan ? lionPridePlan.id : null);
 
   const lionPrideClasses = db.prepare("SELECT id FROM classes WHERE program = 'Lion Pride'").all();
   const enroll = db.prepare("INSERT OR IGNORE INTO enrollments (student_id, class_id) VALUES (?, ?)");
@@ -144,7 +144,7 @@ function seedDemoFamily() {
 
   db.prepare("UPDATE parents SET billing_status = 'active' WHERE id = ?").run(parent.lastInsertRowid);
 
-  console.log("Seeded demo family: demo.parent@example.com / student Avery Rivera (18/20 classes toward Yellow Belt, billing active).");
+  console.log("Seeded demo family: demo.parent@example.com / student Avery Rivera (6/9 classes toward Yellow Belt, Founding Member, billing active).");
 }
 
 function seedDemoLeads() {

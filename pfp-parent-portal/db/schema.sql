@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS parents (
   sms_opt_in INTEGER NOT NULL DEFAULT 1,
   email_opt_in INTEGER NOT NULL DEFAULT 1,
   billing_status TEXT NOT NULL DEFAULT 'no_plan', -- no_plan | active | past_due | canceled
-  stripe_customer_id TEXT,
-  stripe_subscription_id TEXT,
+  square_customer_id TEXT,
+  square_subscription_id TEXT,
   password_hash TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS students (
   test_date TEXT,
   test_eligibility_notified_at TEXT,
   plan_id INTEGER REFERENCES plans(id),
+  is_founding_member INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -51,7 +52,28 @@ CREATE TABLE IF NOT EXISTS plans (
   program TEXT NOT NULL,
   name TEXT NOT NULL,
   monthly_price_cents INTEGER NOT NULL,
-  stripe_price_id TEXT -- set once you create the matching Price in Stripe
+  square_plan_variation_id TEXT -- set automatically once the shared Square subscription plan is created (see services/billing.js)
+);
+
+-- Attendance audit trail. One row per check-in, deduped per student/day so
+-- a parent tapping "Check In" twice in the same day doesn't double-count
+-- toward the 9-class belt-test threshold.
+CREATE TABLE IF NOT EXISTS attendance_log (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  student_id INTEGER NOT NULL REFERENCES students(id),
+  class_id INTEGER REFERENCES classes(id),
+  attended_date TEXT NOT NULL DEFAULT (date('now')),
+  logged_by TEXT NOT NULL DEFAULT 'parent', -- 'parent' | 'admin'
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(student_id, attended_date)
+);
+
+-- Small key/value store for app-wide config that's created at runtime
+-- rather than hand-entered — right now just the shared Square Catalog IDs
+-- for the single "$139/mo PFP Membership" subscription plan + variation.
+CREATE TABLE IF NOT EXISTS app_settings (
+  key TEXT PRIMARY KEY,
+  value TEXT
 );
 
 CREATE TABLE IF NOT EXISTS enrollments (

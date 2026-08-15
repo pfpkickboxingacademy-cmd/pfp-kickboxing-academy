@@ -6,6 +6,12 @@ const { hashPassword } = require("../services/auth");
 
 const router = express.Router();
 
+const FOUNDING_MEMBER_CAP = 10; // first 10 students total, across all 4 programs
+
+function foundingMembersSoFar() {
+  return db.prepare("SELECT COUNT(*) AS n FROM students WHERE is_founding_member = 1").get().n;
+}
+
 function programOptions() {
   const plans = db.prepare("SELECT * FROM plans").all();
   const byProgram = Object.fromEntries(plans.map((p) => [p.program, p]));
@@ -27,10 +33,13 @@ router.get("/", (req, res) => {
     .map((o) => `<option value="${o.value}">${o.label}</option>`)
     .join("");
 
+  const remainingFoundingSpots = Math.max(0, FOUNDING_MEMBER_CAP - foundingMembersSoFar());
+
   const body = `
     <span class="eyebrow">Get Started</span>
     <h1>Sign Your Family Up</h1>
     <p style="color:var(--muted);max-width:60ch;">Register once and we'll text and email you before every class, when your student is up for belt testing, and ahead of academy events. No more sticky notes on the fridge.</p>
+    ${remainingFoundingSpots > 0 ? `<p class="flash" style="max-width:60ch;">&#9733; Founding Member offer: the first ${FOUNDING_MEMBER_CAP} families to sign up get a Founding Member badge. ${remainingFoundingSpots} spot${remainingFoundingSpots === 1 ? "" : "s"} left — price is $139/mo either way.</p>` : ""}
     <form class="card" method="POST" action="/signup">
       <h3 style="font-size:1.1rem;">Parent / Guardian</h3>
       <div class="grid-2">
@@ -82,7 +91,7 @@ router.get("/", (req, res) => {
       <select id="program" name="program" required>${opts}</select>
 
       <button type="submit">Continue to Payment</button>
-      <p style="color:var(--muted);font-size:0.8rem;margin-top:10px;">You'll be taken to secure Stripe checkout to set up monthly dues.</p>
+      <p style="color:var(--muted);font-size:0.8rem;margin-top:10px;">You'll be taken to secure Square checkout to set up monthly dues ($139/mo, every program). ${remainingFoundingSpots > 0 ? `Only ${remainingFoundingSpots} founding member spot${remainingFoundingSpots === 1 ? "" : "s"} left!` : ""}</p>
     </form>
   `;
   res.send(layout({ title: "Sign Up", active: "/signup", body }));
@@ -146,12 +155,14 @@ router.post("/", async (req, res) => {
 
   const whiteBelt = db.prepare("SELECT id FROM belt_curriculum WHERE order_index = 1").get();
   const plan = db.prepare("SELECT * FROM plans WHERE program = ?").get(program);
+  const isFoundingMember = foundingMembersSoFar() < FOUNDING_MEMBER_CAP ? 1 : 0;
 
   const studentInfo = db
     .prepare(
-      `INSERT INTO students (parent_id, name, dob, program, current_rank_id, plan_id) VALUES (?, ?, ?, ?, ?, ?)`
+      `INSERT INTO students (parent_id, name, dob, program, current_rank_id, plan_id, is_founding_member) VALUES (?, ?, ?, ?, ?, ?, ?)`
     )
-    .run(parent.id, student_name, student_dob || null, program, whiteBelt ? whiteBelt.id : null, plan ? plan.id : null);
+    .run(parent.id, student_name, student_dob || null, program, whiteBelt ? whiteBelt.id : null, plan ? plan.id : null, isFoundingMember);
+  const student = { id: studentInfo.lastInsertRowid, name: student_name, program };
 
   const classes = db.prepare("SELECT id FROM classes WHERE program = ?").all(program);
   const enroll = db.prepare("INSERT OR IGNORE INTO enrollments (student_id, class_id) VALUES (?, ?)");
@@ -173,24 +184,30 @@ router.post("/", async (req, res) => {
     return res.send(layout({ title: "Signed Up", active: "/signup", body }));
   }
 
+  const foundingBadge = isFoundingMember
+    ? `<p style="color:var(--ice);">&#9733; ${student_name} is a Founding Member!</p>`
+    : "";
+
   try {
-    const result = await startSubscriptionCheckout({ parent, plan });
+    const result = await startSubscriptionCheckout({ parent, plan, student });
     if (result.dryRun) {
       db.prepare(`UPDATE parents SET billing_status = 'active' WHERE id = ?`).run(parent.id);
       const body = `
         <h1>You're All Set!</h1>
         <p style="color:var(--muted);max-width:60ch;">${student_name} is enrolled in ${program} ($${(plan.monthly_price_cents / 100).toFixed(2)}/mo).</p>
-        <p class="flash">Stripe isn't connected yet, so this is running in dry-run mode: billing was marked active without actually charging a card. Add STRIPE_SECRET_KEY to go live with real payments.</p>
+        ${foundingBadge}
+        <p class="flash">Square isn't connected yet, so this is running in dry-run mode: billing was marked active without actually charging a card. Add SQUARE_ACCESS_TOKEN + SQUARE_LOCATION_ID to go live with real payments.</p>
         <a class="btn" href="/portal/dashboard">Go to Parent Portal</a>
       `;
       return res.send(layout({ title: "Signed Up", active: "/signup", body }));
     }
     return res.redirect(result.checkoutUrl);
   } catch (err) {
-    console.error("Stripe checkout failed:", err);
+    console.error("Square checkout failed:", err);
     const body = `
       <h1>Almost There</h1>
       <p style="color:var(--muted);max-width:60ch;">${student_name} is enrolled in ${program}, but we couldn't start checkout (${err.message}). An admin has been notified — reach out to PFPkickboxingacademy@gmail.com to finish setting up billing.</p>
+      ${foundingBadge}
       <a class="btn" href="/portal/dashboard">Go to Parent Portal</a>
     `;
     res.send(layout({ title: "Signed Up", active: "/signup", body }));

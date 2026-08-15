@@ -25,9 +25,13 @@ function addColumnIfMissing(table, column, definition) {
   }
 }
 addColumnIfMissing("parents", "billing_status", "TEXT NOT NULL DEFAULT 'no_plan'");
-addColumnIfMissing("parents", "stripe_customer_id", "TEXT");
-addColumnIfMissing("parents", "stripe_subscription_id", "TEXT");
+addColumnIfMissing("parents", "square_customer_id", "TEXT");
+addColumnIfMissing("parents", "square_subscription_id", "TEXT");
 addColumnIfMissing("parents", "password_hash", "TEXT");
 addColumnIfMissing("students", "plan_id", "INTEGER REFERENCES plans(id)");
+addColumnIfMissing("students", "is_founding_member", "INTEGER NOT NULL DEFAULT 0");
+addColumnIfMissing("plans", "square_plan_variation_id", "TEXT");
+// Old databases (pre-Square) still have these Stripe columns lying around —
+// harmless to leave in place, just no longer written to.
 
 module.exports = db;

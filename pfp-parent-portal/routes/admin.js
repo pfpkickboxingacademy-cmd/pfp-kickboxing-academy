@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("../db");
 const { layout } = require("../views/layout");
 const { runReminderSweep } = require("../services/reminders");
+const { sendEmail, sendSMS } = require("../services/notify");
 
 const router = express.Router();
 
@@ -31,6 +32,7 @@ function adminNav(active) {
     ["/admin", "Dashboard"],
     ["/admin/leads", "Leads (CRM)"],
     ["/admin/plans", "Billing Plans"],
+    ["/admin/announcements", "Announcements"],
   ];
   return `<div style="margin-bottom:24px;">${items
     .map(
@@ -43,7 +45,7 @@ function adminNav(active) {
 router.get("/", (req, res) => {
   const students = db
     .prepare(
-      `SELECT s.*, p.name AS parent_name, p.email, p.phone, p.billing_status, bc.rank_name, bc.classes_required
+      `SELECT s.*, s.is_founding_member, p.name AS parent_name, p.email, p.phone, p.billing_status, bc.rank_name, bc.classes_required
        FROM students s
        JOIN parents p ON p.id = s.parent_id
        LEFT JOIN belt_curriculum bc ON bc.id = s.current_rank_id
@@ -55,7 +57,7 @@ router.get("/", (req, res) => {
     .map(
       (s) => `
       <tr>
-        <td>${s.name}<br><span style="color:var(--muted);font-size:0.8rem;">${s.program}</span></td>
+        <td>${s.name}${s.is_founding_member ? ` <span class="pill" style="border-color:var(--ice);color:var(--ice);font-size:0.65rem;">&#9733; Founding</span>` : ""}<br><span style="color:var(--muted);font-size:0.8rem;">${s.program}</span></td>
         <td>${s.parent_name}<br><span style="color:var(--muted);font-size:0.8rem;">${s.email}${s.phone ? " · " + s.phone : ""}</span></td>
         <td>${BILLING_LABEL[s.billing_status] || s.billing_status}</td>
         <td>${s.rank_name || "-"}</td>
@@ -181,7 +183,7 @@ router.get("/plans", (req, res) => {
           <form method="POST" action="/admin/plans/${p.id}" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
             <input type="text" name="name" value="${p.name}" style="width:180px;padding:6px 8px;">
             <input type="number" name="monthly_price_usd" value="${(p.monthly_price_cents / 100).toFixed(2)}" step="0.01" style="width:100px;padding:6px 8px;">
-            <input type="text" name="stripe_price_id" value="${p.stripe_price_id || ""}" placeholder="price_..." style="width:200px;padding:6px 8px;">
+            <input type="text" name="square_plan_variation_id" value="${p.square_plan_variation_id || ""}" placeholder="auto-filled on first live checkout" style="width:260px;padding:6px 8px;">
             <button type="submit" style="margin:0;padding:6px 12px;font-size:0.7rem;">Save</button>
           </form>
         </td>
@@ -194,9 +196,9 @@ router.get("/plans", (req, res) => {
     <h1>Billing Plans</h1>
     ${adminNav("/admin/plans")}
     <div class="card">
-      <p style="color:var(--muted);">One monthly plan per program. To go live with real charges: create a matching Product/Price in your Stripe Dashboard, then paste the Price ID (starts with <code>price_</code>) here.</p>
+      <p style="color:var(--muted);">One monthly plan per program — all four are $139/mo. The Square subscription plan variation ID is created and filled in automatically the first time someone checks out live (see services/billing.js); you only need to touch it if something needs to be re-pointed at a different Square Catalog object.</p>
       <table>
-        <thead><tr><th>Program</th><th>Name / Price / Stripe Price ID</th></tr></thead>
+        <thead><tr><th>Program</th><th>Name / Price / Square Plan Variation ID</th></tr></thead>
         <tbody>${rows || `<tr><td colspan="2" style="color:var(--muted);">No plans yet.</td></tr>`}</tbody>
       </table>
     </div>
@@ -205,15 +207,85 @@ router.get("/plans", (req, res) => {
 });
 
 router.post("/plans/:id", (req, res) => {
-  const { name, monthly_price_usd, stripe_price_id } = req.body;
+  const { name, monthly_price_usd, square_plan_variation_id } = req.body;
   const cents = Math.round(Number(monthly_price_usd || 0) * 100);
-  db.prepare(`UPDATE plans SET name = ?, monthly_price_cents = ?, stripe_price_id = ? WHERE id = ?`).run(
+  db.prepare(`UPDATE plans SET name = ?, monthly_price_cents = ?, square_plan_variation_id = ? WHERE id = ?`).run(
     name,
     cents,
-    stripe_price_id || null,
+    square_plan_variation_id || null,
     req.params.id
   );
   res.redirect("/admin/plans");
+});
+
+// --- Announcements ---------------------------------------------------------
+// One-off broadcast to every signed-up parent (distinct from the automated,
+// trigger-based reminders in services/reminders.js). Respects each parent's
+// email/SMS opt-in, and logs to reminder_log (type 'announcement') so the
+// activity shows up in the admin log alongside everything else.
+
+router.get("/announcements", (req, res) => {
+  const recent = db
+    .prepare(`SELECT * FROM reminder_log WHERE reminder_type = 'announcement' ORDER BY sent_at DESC LIMIT 20`)
+    .all();
+  const recentRows = recent
+    .map((l) => `<tr><td>${l.sent_at}</td><td>${l.channel}${l.dry_run ? " (dry run)" : ""}</td><td>${l.recipient}</td></tr>`)
+    .join("");
+  const parentCount = db.prepare("SELECT COUNT(*) AS n FROM parents").get().n;
+
+  const body = `
+    <span class="eyebrow">Staff Only</span>
+    <h1>Announcements</h1>
+    ${adminNav("/admin/announcements")}
+    <div class="card">
+      <h3 style="font-size:1.1rem;">Send an Update to All Parents</h3>
+      <p style="color:var(--muted);">Goes out by email and text to every one of the ${parentCount} signed-up families who have that channel enabled — right now, once, not on a recurring schedule.</p>
+      <form method="POST" action="/admin/announcements">
+        <label>Subject</label>
+        <input type="text" name="subject" required placeholder="Schedule change this week">
+        <label>Message</label>
+        <textarea name="message" rows="5" required placeholder="Hi families, ..."></textarea>
+        <button type="submit">Send to All Parents</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3 style="font-size:1.1rem;">Recent Announcements</h3>
+      <table>
+        <thead><tr><th>Sent At</th><th>Channel</th><th>Recipient</th></tr></thead>
+        <tbody>${recentRows || `<tr><td colspan="3" style="color:var(--muted);">Nothing sent yet.</td></tr>`}</tbody>
+      </table>
+    </div>
+  `;
+  res.send(layout({ title: "Announcements", active: "/admin", body }));
+});
+
+router.post("/announcements", async (req, res) => {
+  const { subject, message } = req.body;
+  if (!subject || !message) return res.redirect("/admin/announcements");
+
+  const broadcastKey = `broadcast:${Date.now()}`;
+  const parents = db.prepare("SELECT * FROM parents").all();
+  let sentCount = 0;
+
+  for (const p of parents) {
+    if (p.email_opt_in && p.email) {
+      const result = await sendEmail({ to: p.email, subject, text: message });
+      db.prepare(
+        `INSERT OR IGNORE INTO reminder_log (reminder_type, reference_key, channel, recipient, dry_run) VALUES ('announcement', ?, 'email', ?, ?)`
+      ).run(broadcastKey, p.email, result.dryRun ? 1 : 0);
+      sentCount++;
+    }
+    if (p.sms_opt_in && p.phone) {
+      const result = await sendSMS({ to: p.phone, body: `${subject}\n\n${message}` });
+      db.prepare(
+        `INSERT OR IGNORE INTO reminder_log (reminder_type, reference_key, channel, recipient, dry_run) VALUES ('announcement', ?, 'sms', ?, ?)`
+      ).run(broadcastKey, p.phone, result.dryRun ? 1 : 0);
+      sentCount++;
+    }
+  }
+
+  console.log(`[ANNOUNCEMENT] "${subject}" sent to ${sentCount} channel(s) across ${parents.length} parent(s).`);
+  res.redirect("/admin/announcements");
 });
 
 // --- CRM: Leads ----------------------------------------------------------
