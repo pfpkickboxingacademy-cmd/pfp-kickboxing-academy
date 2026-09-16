@@ -20,6 +20,7 @@ function layout({ title, active, flash, body }) {
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="/app.js" defer></script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <div class="topbar">
