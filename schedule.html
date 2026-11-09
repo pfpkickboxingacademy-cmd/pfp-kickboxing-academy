@@ -239,6 +239,21 @@
     .cta-band{padding:52px 0;}
     .footer-grid{grid-template-columns:1fr;}
   }
+  /* NAV SPACING: keep the Free Private Lesson button clearly separated from the nav links */
+  .nav-row{gap:36px;}
+  .nav-links{gap:22px;white-space:nowrap;}
+  .nav-actions{flex-shrink:0;}
+  @media (max-width:1200px) and (min-width:901px){
+    .nav-row{gap:24px;}
+    .nav-links{gap:16px;font-size:0.72rem;}
+    .brand{font-size:1.05rem;}
+    .brand img{height:40px;width:40px;}
+    .nav-actions .btn-primary{padding:12px 18px;font-size:0.75rem;}
+  }
+  @media (max-width:900px){
+    .nav-row{gap:12px;}
+    .nav-actions{flex-shrink:1;gap:12px;}
+  }
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -301,7 +316,7 @@
       <div class="schedule-head">
         <span class="eyebrow">Weekly Schedule</span>
         <h3>Academy Classes</h3>
-        <p>Classes run Monday through Thursday. Karate Cubs &amp; Lion Pride and Teens &amp; Adult swap time slots on Wednesday and Thursday, and there's an extra midday Cardio Kickboxing class on Wednesday.</p>
+        <p>Classes run Monday through Thursday. Karate Cubs &amp; Lion Pride and Teens &amp; Adult swap time slots on Wednesday and Thursday, and there's an extra midday Cardio Kickboxing class on Monday and Wednesday.</p>
       </div>
 
       <div class="schedule-pills">
@@ -315,6 +330,7 @@
       <div class="day-grid">
         <div class="day-card">
           <h4>Monday</h4>
+          <div class="day-row"><span class="time">11:45 AM &ndash; 12:30 PM</span><span class="cls">Cardio Kickboxing</span></div>
           <div class="day-row"><span class="time">5:00 &ndash; 5:45 PM</span><span class="cls">Karate Cubs &amp; Lion Pride<span class="class-age">Ages 5&ndash;12</span></span></div>
           <div class="day-row"><span class="time">6:00 &ndash; 6:45 PM</span><span class="cls">Teens &amp; Adult<span class="class-age">Ages 13+</span></span></div>
           <div class="day-row"><span class="time">7:00 &ndash; 7:45 PM</span><span class="cls">Cardio Kickboxing</span></div>
@@ -327,7 +343,7 @@
         </div>
         <div class="day-card">
           <h4>Wednesday</h4>
-          <div class="day-row"><span class="time">11:30 AM &ndash; 12:15 PM</span><span class="cls">Cardio Kickboxing</span></div>
+          <div class="day-row"><span class="time">11:45 AM &ndash; 12:30 PM</span><span class="cls">Cardio Kickboxing</span></div>
           <div class="day-row"><span class="time">5:00 &ndash; 5:45 PM</span><span class="cls">Teens &amp; Adult<span class="class-age">Ages 13+</span></span></div>
           <div class="day-row"><span class="time">6:00 &ndash; 6:45 PM</span><span class="cls">Karate Cubs &amp; Lion Pride<span class="class-age">Ages 5&ndash;12</span></span></div>
           <div class="day-row"><span class="time">7:00 &ndash; 7:45 PM</span><span class="cls">Cardio Kickboxing</span></div>
@@ -495,7 +511,7 @@
       <div>
         <h4>Follow</h4>
         <a href="https://www.instagram.com/pfpkickboxingacademy" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://discord.gg/hs8NCYEhf" target="_blank" rel="noopener">Discord</a>
+        <a href="https://discord.gg/ku3TSAuwsb" target="_blank" rel="noopener">Discord</a>
       </div>
     </div>
   </div>

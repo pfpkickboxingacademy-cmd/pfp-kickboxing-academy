@@ -224,6 +224,21 @@
     .cta-band{padding:52px 0;}
     .footer-grid{grid-template-columns:1fr;}
   }
+  /* NAV SPACING: keep the Free Private Lesson button clearly separated from the nav links */
+  .nav-row{gap:36px;}
+  .nav-links{gap:22px;white-space:nowrap;}
+  .nav-actions{flex-shrink:0;}
+  @media (max-width:1200px) and (min-width:901px){
+    .nav-row{gap:24px;}
+    .nav-links{gap:16px;font-size:0.72rem;}
+    .brand{font-size:1.05rem;}
+    .brand img{height:40px;width:40px;}
+    .nav-actions .btn-primary{padding:12px 18px;font-size:0.75rem;}
+  }
+  @media (max-width:900px){
+    .nav-row{gap:12px;}
+    .nav-actions{flex-shrink:1;gap:12px;}
+  }
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -410,7 +425,7 @@
       <div>
         <h4>Follow</h4>
         <a href="https://www.instagram.com/pfpkickboxingacademy" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://discord.gg/hs8NCYEhf" target="_blank" rel="noopener">Discord</a>
+        <a href="https://discord.gg/ku3TSAuwsb" target="_blank" rel="noopener">Discord</a>
       </div>
     </div>
   </div>

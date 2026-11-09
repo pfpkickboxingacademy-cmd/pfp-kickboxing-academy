@@ -172,13 +172,14 @@
 
   .signup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
   .booking-embed{
+    max-width:820px;
     background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;
     box-shadow:0 24px 60px rgba(0,0,0,.28);
   }
-  .booking-embed iframe{display:block;width:100%;height:780px;border:0;}
+  .booking-embed iframe{display:block;width:100%;height:600px;border:0;}
   .booking-fallback{margin-top:16px;color:var(--muted);font-size:0.9rem;}
   .booking-fallback a{color:var(--blue);text-decoration:underline;}
-  @media (max-width:900px){ .booking-embed iframe{height:860px;} }
+  @media (max-width:900px){ .booking-embed iframe{height:680px;} }
 
   .info-card{
     background:linear-gradient(135deg,var(--navy),var(--navy-2));border:1px solid var(--line);border-radius:20px;padding:32px;margin-bottom:24px;
@@ -247,6 +248,21 @@
     .cta-band{padding:52px 0;}
     .footer-grid{grid-template-columns:1fr;}
   }
+  /* NAV SPACING: keep the Free Private Lesson button clearly separated from the nav links */
+  .nav-row{gap:36px;}
+  .nav-links{gap:22px;white-space:nowrap;}
+  .nav-actions{flex-shrink:0;}
+  @media (max-width:1200px) and (min-width:901px){
+    .nav-row{gap:24px;}
+    .nav-links{gap:16px;font-size:0.72rem;}
+    .brand{font-size:1.05rem;}
+    .brand img{height:40px;width:40px;}
+    .nav-actions .btn-primary{padding:12px 18px;font-size:0.75rem;}
+  }
+  @media (max-width:900px){
+    .nav-row{gap:12px;}
+    .nav-actions{flex-shrink:1;gap:12px;}
+  }
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -301,9 +317,9 @@
       <p>Your very first private lesson at PFP is always free. Pick a day and time that works for you below and you're on the schedule.</p>
     </div>
     <div class="booking-embed">
-      <iframe src="https://book.squareup.com/appointments/4awujdqaibfbeu/location/L0SJ2VAJQ11XC/services" title="Book a free private lesson at PFP Kickboxing Academy" loading="lazy" allow="payment"></iframe>
+      <iframe src="https://book.squareup.com/appointments/4awujdqaibfbeu/location/L0SJ2VAJQ11XC/availability" title="Book a free private lesson at PFP Kickboxing Academy" loading="lazy" allow="payment"></iframe>
     </div>
-    <p class="booking-fallback">Booking not loading? <a href="https://book.squareup.com/appointments/4awujdqaibfbeu/location/L0SJ2VAJQ11XC/services" target="_blank" rel="noopener">Open it in a new tab</a>, or send us a message below and we'll get you scheduled.</p>
+    <p class="booking-fallback">Booking not loading? <a href="https://book.squareup.com/appointments/4awujdqaibfbeu/location/L0SJ2VAJQ11XC/availability" target="_blank" rel="noopener">Open it in a new tab</a>, or send us a message below and we'll get you scheduled.</p>
   </div>
 </section>
 
@@ -368,7 +384,7 @@
           <h3>Class Hours</h3>
           <ul class="hours-list">
             <li><span class="day">Mon &ndash; Thu</span><span>4:00 &ndash; 8:00 PM</span></li>
-            <li><span class="day">Wed (midday)</span><span>11:30 AM &ndash; 12:15 PM</span></li>
+            <li><span class="day">Mon &amp; Wed (midday)</span><span>11:45 AM &ndash; 12:30 PM</span></li>
             <li><span class="day">Friday</span><span>Closed</span></li>
             <li><span class="day">Saturday</span><span>Closed</span></li>
             <li><span class="day">Sunday</span><span>Closed</span></li>
@@ -456,7 +472,7 @@
       <div>
         <h4>Follow</h4>
         <a href="https://www.instagram.com/pfpkickboxingacademy" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://discord.gg/hs8NCYEhf" target="_blank" rel="noopener">Discord</a>
+        <a href="https://discord.gg/ku3TSAuwsb" target="_blank" rel="noopener">Discord</a>
       </div>
     </div>
   </div>
