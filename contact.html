@@ -171,6 +171,14 @@
   .form-status{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--blue);display:none;}
 
   .signup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .booking-embed{
+    background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.28);
+  }
+  .booking-embed iframe{display:block;width:100%;height:780px;border:0;}
+  .booking-fallback{margin-top:16px;color:var(--muted);font-size:0.9rem;}
+  .booking-fallback a{color:var(--blue);text-decoration:underline;}
+  @media (max-width:900px){ .booking-embed iframe{height:860px;} }
 
   .info-card{
     background:linear-gradient(135deg,var(--navy),var(--navy-2));border:1px solid var(--line);border-radius:20px;padding:32px;margin-bottom:24px;
@@ -289,21 +297,13 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Get Started</span>
-      <h2>Sign up for your free private lesson.</h2>
-      <p>Your very first private lesson at PFP is always free. There's no online booking for it yet, so just send us your info below and we'll get you on the schedule.</p>
+      <h2>Book your free private lesson.</h2>
+      <p>Your very first private lesson at PFP is always free. Pick a day and time that works for you below and you're on the schedule.</p>
     </div>
-    <div class="signup-grid">
-      <div class="info-card">
-        <h3>Free Private Lesson</h3>
-        <p class="body-copy" style="margin-bottom:20px;">Fill out the form below (or email/call us directly) and we'll reach out to schedule your first private lesson, on us.</p>
-        <a href="#contact-form" class="btn btn-primary">Sign Up Below</a>
-      </div>
-      <div class="info-card">
-        <h3>2-Week Trial, $100</h3>
-        <p class="body-copy" style="margin-bottom:20px;">Want more time to get a real feel for the academy? Get full access for two weeks with our discounted trial.</p>
-        <a href="https://sparkpages.io/cart/2/?i=_BbGb&amp;c=&amp;ocu=" target="_blank" rel="noopener" class="btn btn-primary">Start Your Trial</a>
-      </div>
+    <div class="booking-embed">
+      <iframe src="https://book.squareup.com/appointments/4awujdqaibfbeu/location/L0SJ2VAJQ11XC/services" title="Book a free private lesson at PFP Kickboxing Academy" loading="lazy" allow="payment"></iframe>
     </div>
+    <p class="booking-fallback">Booking not loading? <a href="https://book.squareup.com/appointments/4awujdqaibfbeu/location/L0SJ2VAJQ11XC/services" target="_blank" rel="noopener">Open it in a new tab</a>, or send us a message below and we'll get you scheduled.</p>
   </div>
 </section>
 
@@ -366,12 +366,10 @@
 
         <div class="info-card">
           <h3>Class Hours</h3>
-          <!-- TODO: these are derived from the class schedule on the home
-               page (first class 10:00 AM, last evening class ends 7:00 PM
-               Tue/Thu/Fri). Ask Tyreeke to confirm official front-desk hours
-               separately if they differ from class times. -->
           <ul class="hours-list">
-            <li><span class="day">Mon &ndash; Fri</span><span>10:00 AM &ndash; 7:00 PM</span></li>
+            <li><span class="day">Mon &ndash; Thu</span><span>4:00 &ndash; 8:00 PM</span></li>
+            <li><span class="day">Wed (midday)</span><span>11:30 AM &ndash; 12:15 PM</span></li>
+            <li><span class="day">Friday</span><span>Closed</span></li>
             <li><span class="day">Saturday</span><span>Closed</span></li>
             <li><span class="day">Sunday</span><span>Closed</span></li>
           </ul>
@@ -419,7 +417,7 @@
       </details>
       <details class="faq-item">
         <summary>Can I try a class before joining?</summary>
-        <p>Absolutely. Your very first private lesson is always free, just email or call us to get it scheduled. If you want more time to get a real feel for the academy, we also offer a discounted 2-week trial for $100, which you can <a href="https://sparkpages.io/cart/2/?i=_BbGb&amp;c=&amp;ocu=" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;">sign up for here</a>.</p>
+        <p>Absolutely. Your very first private lesson is always free, and you can <a href="#free-class" style="color:var(--blue);text-decoration:underline;">book it online right here</a>. Prefer to talk to someone? Call or email us and we'll get you on the schedule.</p>
       </details>
     </div>
   </div>
@@ -431,7 +429,7 @@
     <p>Whether you're stepping onto the mat for the first time or looking to elevate your training, we're excited to be part of your journey.</p>
     <div class="hero-ctas">
       <a href="#free-class" class="btn btn-ghost">Book Your Free Private Lesson</a>
-      <a href="https://sparkpages.io/cart/2/?i=_BbGb&amp;c=&amp;ocu=" target="_blank" rel="noopener" class="btn btn-ghost">Start Your $100 2-Week Trial</a>
+      <a href="/schedule" class="btn btn-ghost">View Class Schedule</a>
     </div>
   </div>
 </section>
