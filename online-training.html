@@ -274,6 +274,60 @@
     .cta-band{padding:52px 0;}
     .footer-grid{grid-template-columns:1fr;}
   }
+
+  /* PRICING TIERS */
+  .tier-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:stretch;}
+  .tier{
+    position:relative;display:flex;flex-direction:column;
+    background:linear-gradient(160deg,var(--card),rgba(255,255,255,.02));
+    border:1px solid var(--line);border-radius:22px;padding:32px 26px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .tier:hover{transform:translateY(-4px);box-shadow:0 28px 60px rgba(0,0,0,.35);}
+  .tier.featured{
+    border:2px solid transparent;
+    background:
+      linear-gradient(160deg,#0B2A7A,var(--navy)) padding-box,
+      linear-gradient(135deg,var(--red),var(--blue)) border-box;
+    box-shadow:0 0 0 1px rgba(255,22,22,.15),0 30px 70px rgba(255,22,22,.18);
+  }
+  .tier.free{background:linear-gradient(160deg,rgba(87,169,255,.10),rgba(255,255,255,.02));border-style:dashed;}
+  .tier-badge{
+    position:absolute;top:-13px;left:26px;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--white);background:var(--red);padding:6px 12px;border-radius:100px;
+    box-shadow:0 6px 18px rgba(255,22,22,.35);
+  }
+  .tier-name{font-size:2rem;line-height:1;margin-bottom:10px;}
+  .tier-tagline{color:var(--ice);font-size:0.98rem;line-height:1.4;min-height:2.8em;}
+  .tier-price{display:flex;align-items:flex-start;gap:4px;margin-top:22px;font-family:'Anton',sans-serif;color:var(--white);}
+  .tier-price .cur{font-size:1.4rem;margin-top:6px;}
+  .tier-price .amt{font-size:3.4rem;line-height:1;}
+  .tier-price .cents{font-size:1.4rem;margin-top:6px;}
+  .tier.featured .tier-price{color:var(--white);}
+  .tier.featured .tier-price .amt{text-shadow:0 4px 0 rgba(255,22,22,.45);}
+  .tier-term{color:var(--muted);font-size:0.85rem;margin-top:6px;min-height:1.3em;}
+  .tier .btn{width:100%;margin-top:22px;padding:13px 16px;}
+  .tier hr{border:none;border-top:2px solid var(--line);margin:26px 0 20px;}
+  .tier.featured hr{border-top-color:rgba(255,22,22,.45);}
+  .tier-lead{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:0.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+  .tier-list{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .tier-list li{position:relative;padding-left:26px;color:var(--ice);font-size:0.93rem;line-height:1.4;}
+  .tier-list li::before{
+    content:"";position:absolute;left:2px;top:4px;width:12px;height:7px;
+    border-left:2.5px solid var(--red);border-bottom:2.5px solid var(--red);transform:rotate(-45deg);
+  }
+  .tier.free .tier-list li::before{border-color:var(--blue);}
+  @media (min-width:1101px){
+    .tier-grid{padding-top:12px;}
+    .tier.featured{transform:translateY(-12px);}
+    .tier.featured:hover{transform:translateY(-16px);}
+  }
+  .tier-note{margin-top:28px;color:var(--muted);font-size:0.9rem;text-align:center;}
+  @media (max-width:1100px){ .tier-grid{grid-template-columns:repeat(2,1fr);gap:28px 20px;} }
+  @media (max-width:640px){ .tier-grid{grid-template-columns:1fr;} .tier-tagline,.tier-term{min-height:0;} }
+
   /* NAV SPACING: keep the Free Private Lesson button clearly separated from the nav links */
   .nav-row{gap:36px;}
   .nav-links{gap:22px;white-space:nowrap;}
@@ -332,7 +386,7 @@
       <h1>Train like a champion. <span>Anywhere in the world.</span></h1>
       <p class="lede">Whether you're preparing for your next tournament or looking to sharpen your skills between competitions, Point Fighting University gives you access to elite-level coaching designed for serious martial artists.</p>
       <div class="hero-ctas">
-        <a href="https://square.link/u/sqYaDGYc" target="_blank" rel="noopener" class="btn btn-primary">Join the Online Program</a>
+        <a href="#plans" class="btn btn-primary">See Membership Plans</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -403,6 +457,77 @@
   </div>
 </section>
 
+<section class="section" id="plans" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Membership Plans</span>
+      <h2>Choose your plan.</h2>
+      <p>Every plan is billed monthly. Pick the level of coaching that matches your goals, or start free in our community.</p>
+    </div>
+    <div class="tier-grid">
+      <div class="tier">
+        <h3 class="tier-name">Standard</h3>
+        <p class="tier-tagline">Build your foundation.</p>
+        <div class="tier-price"><span class="cur">$</span><span class="amt">179</span><span class="cents">.99</span></div>
+        <p class="tier-term">per month</p>
+        <a href="https://square.link/u/YvmBj9UX" target="_blank" rel="noopener" class="btn btn-ghost">Join Standard</a>
+        <hr>
+        <ul class="tier-list">
+          <li>Access to all live group training sessions</li>
+          <li>Weekly film study and fight breakdowns</li>
+          <li>Training video library</li>
+          <li>Exclusive PFU Discord community</li>
+          <li>Learn footwork, blitzing, kicking, boxing &amp; fight IQ</li>
+        </ul>
+      </div>
+      <div class="tier featured">
+        <span class="tier-badge">Most Popular</span>
+        <h3 class="tier-name">Premium</h3>
+        <p class="tier-tagline">Take your skills to the next level.</p>
+        <div class="tier-price"><span class="cur">$</span><span class="amt">229</span><span class="cents">.99</span></div>
+        <p class="tier-term">per month</p>
+        <a href="https://square.link/u/XpT0YWKc" target="_blank" rel="noopener" class="btn btn-primary">Join Premium</a>
+        <hr>
+        <p class="tier-lead">Everything in Standard, plus:</p>
+        <ul class="tier-list">
+          <li>2 private 1-on-1 coaching sessions per month</li>
+          <li>Personalized feedback and technical corrections</li>
+          <li>Individualized training guidance</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <h3 class="tier-name">VIP</h3>
+        <p class="tier-tagline">The ultimate point fighting experience.</p>
+        <div class="tier-price"><span class="cur">$</span><span class="amt">399</span><span class="cents">.99</span></div>
+        <p class="tier-term">per month</p>
+        <a href="https://square.link/u/GWFlgy7D" target="_blank" rel="noopener" class="btn btn-ghost">Join VIP</a>
+        <hr>
+        <p class="tier-lead">Everything in Premium, plus:</p>
+        <ul class="tier-list">
+          <li>Priority access to private coaching</li>
+          <li>Advanced personalized training plans</li>
+          <li>In-depth fight analysis and strategy</li>
+          <li>Dedicated mentorship and competition preparation</li>
+        </ul>
+      </div>
+      <div class="tier free">
+        <h3 class="tier-name">Free</h3>
+        <p class="tier-tagline">Join the PFP community on Discord.</p>
+        <div class="tier-price"><span class="cur">$</span><span class="amt">0</span></div>
+        <p class="tier-term">always free</p>
+        <a href="https://discord.gg/ku3TSAuwsb" target="_blank" rel="noopener" class="btn btn-ghost">Join the Discord</a>
+        <hr>
+        <ul class="tier-list">
+          <li>Free Open Film Study every Wednesday with Sensei Tyreeke Saint</li>
+          <li>Competition breakdowns and strategy discussions</li>
+          <li>Training tips and resources</li>
+          <li>Ask questions and connect with martial artists everywhere</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="coach-band section" style="padding-top:0;">
   <div class="wrap">
     <div class="coach-split">
@@ -448,7 +573,7 @@
   <div class="wrap">
     <h2>Ready to elevate your training?</h2>
     <p>Join athletes who are committed to reaching their highest potential.</p>
-    <a href="https://square.link/u/sqYaDGYc" target="_blank" rel="noopener" class="btn btn-ghost">Start Training Today</a>
+    <a href="#plans" class="btn btn-ghost">Choose Your Plan</a>
   </div>
 </section>
 
